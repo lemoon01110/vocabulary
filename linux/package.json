@@ -1,7 +1,7 @@
 {
   "name": "vocabulary",
   "productName": "Vocabulary",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Offline GRE vocabulary trainer: practice, flashcards, a 2,880-word dictionary and a lifetime record.",
   "main": "main.js",
   "license": "MIT",

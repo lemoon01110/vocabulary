@@ -270,8 +270,35 @@ const INDEX = new Map(WORDS.map((r, i) => [r[0], i]));
 /* ---------- record: kept on this device until Reset ---------- */
 const LS = "vocabulary.record.v1";
 const blank = () => ({right:0, wrong:0, words:{}, days:{}, choices:4, type:"sense", letter:"", missedOnly:false, cards:{}, fcFront:"word", fcDeck:"new", fcLetter:"", fcSize:20, updated:0});
+// Rebuild a record from untrusted JSON (a pasted backup or stored data): known keys only, numbers checked.
+const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
+const WORDSET = new Set(WORDS.map(r => r[0]));
+const num = (v, lo, hi, d) => { const n = Number(v); return Number.isFinite(n) && n >= lo && n <= hi ? Math.floor(n) : d; };
+const BIG = 1e9;
+function clean(raw) {
+  const o = blank();
+  if (!raw || typeof raw !== "object") return o;
+  o.right = num(raw.right, 0, BIG, 0); o.wrong = num(raw.wrong, 0, BIG, 0);
+  o.choices = num(raw.choices, 3, 6, 4);
+  o.type = ["sense", "word", "blank", "mixed"].includes(raw.type) ? raw.type : "sense";
+  o.letter = typeof raw.letter === "string" && /^[a-z]?$/.test(raw.letter) ? raw.letter : "";
+  o.missedOnly = raw.missedOnly === true;
+  o.fcFront = raw.fcFront === "sense" ? "sense" : "word";
+  o.fcDeck = ["new", "notebook", "all"].includes(raw.fcDeck) ? raw.fcDeck : "new";
+  o.fcLetter = typeof raw.fcLetter === "string" && /^[a-z]?$/.test(raw.fcLetter) ? raw.fcLetter : "";
+  o.fcSize = [10, 20, 50].includes(raw.fcSize) ? raw.fcSize : 20;
+  o.updated = num(raw.updated, 0, 1e15, 0);
+  const day = v => typeof v === "string" && DAY_RE.test(v) ? v : "";
+  for (const [w, v] of Object.entries(raw.words && typeof raw.words === "object" ? raw.words : {}))
+    if (WORDSET.has(w) && Array.isArray(v)) o.words[w] = [num(v[0], 0, BIG, 0), num(v[1], 0, BIG, 0), v[2] === 1 ? 1 : 0, day(v[3])];
+  for (const [w, v] of Object.entries(raw.cards && typeof raw.cards === "object" ? raw.cards : {}))
+    if (WORDSET.has(w) && Array.isArray(v)) o.cards[w] = [num(v[0], 0, BIG, 0), num(v[1], 0, BIG, 0), day(v[2])];
+  for (const [d, v] of Object.entries(raw.days && typeof raw.days === "object" ? raw.days : {}))
+    if (DAY_RE.test(d) && Array.isArray(v)) o.days[d] = [num(v[0], 0, BIG, 0), num(v[1], 0, BIG, 0)];
+  return o;
+}
 let S = blank();
-try { const s = JSON.parse(localStorage.getItem(LS) || "null"); if (s) S = Object.assign(blank(), s); } catch (e) {}
+try { const s = JSON.parse(localStorage.getItem(LS) || "null"); if (s) S = clean(s); } catch (e) {}
 // words[w] = [right, wrong, lastOk(1/0), lastDay]; days["YYYY-MM-DD"] = [right, wrong]
 function save() {
   S.updated = Date.now();
@@ -282,8 +309,10 @@ const rec = w => S.words[w] || [0, 0, 0, 0];
 const mastered = w => { const r = rec(w); return r[0] >= 3 && r[2] === 1 && r[0] > r[1]; };
 function renderLife() {
   const t = S.right + S.wrong;
-  $("life").innerHTML = t ? "<b>" + (Math.round(S.right / t * 1000) / 10) + "%</b> lifetime &middot; " + S.right.toLocaleString() + " of " + t.toLocaleString()
-                          : "No answers yet";
+  const el = $("life"); el.textContent = "";
+  if (!t) { el.textContent = "No answers yet"; return; }
+  const b = document.createElement("b"); b.textContent = (Math.round(S.right / t * 1000) / 10) + "%";
+  el.append(b, " lifetime \u00b7 " + S.right.toLocaleString() + " of " + t.toLocaleString());
 }
 
 /* ---------- routing ---------- */
@@ -603,8 +632,8 @@ $("bkApply").addEventListener("click", () => {
     const raw = $("bkText").value.trim();
     if (!raw.startsWith("VOCAB1:")) throw 0;
     const data = JSON.parse(decodeURIComponent(escape(atob(raw.slice(7)))));
-    if (typeof data.right !== "number" || typeof data.words !== "object") throw 0;
-    S = Object.assign(blank(), data); save(); renderLife(); renderOpts(); renderRecord(); cur = null; fc.deck = null;
+    if (!data || typeof data !== "object" || typeof data.words !== "object") throw 0;
+    S = clean(data); save(); renderLife(); renderOpts(); renderRecord(); cur = null; fc.deck = null;
     $("bkBox").hidden = true; $("bkMsg").textContent = "Restored: " + (S.right + S.wrong).toLocaleString() + " answers.";
   } catch (e) { $("bkMsg").textContent = "That doesn't look like a Vocabulary backup. Copy it again from the other device."; }
 });
