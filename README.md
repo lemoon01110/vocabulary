@@ -1,63 +1,64 @@
 # Vocabulary
 
-An offline trainer for 2,880 GRE vocabulary words, styled like a printed dictionary. It runs as a desktop app on Linux and as an app on Android. No account, no network, no tracking: your record stays on your device.
+A study app for 2,880 GRE vocabulary words, for Linux and Android. It works without an internet connection, and progress is saved on the device.
 
-## What it does
+## Features
 
-- **Practice.** A word and four numbered senses; pick the right one. Also *sense to word* and *fill the blank* (the word is removed from an example sentence). Words you keep missing come up more often.
-- **Cards.** Index-card flashcards. Turn the card, then mark *knew it* or *didn't know*; missed cards come back a few cards later.
-- **Dictionary.** All 2,880 entries, A to Z, searchable by word or by meaning, each with part of speech, definition, example sentence, synonyms and antonyms.
-- **Notebook.** Every word you have missed and not yet learned, hardest first, with a button to practice just those.
-- **Record.** Lifetime percent correct, answers, daily streak, words seen and known, and the last 14 days.
-- **Backup.** Copy your record as text and paste it into the app on another device. Reset asks before it clears anything.
+- **Practice**: multiple-choice questions. A question shows a word and asks for its meaning, shows a meaning and asks for the word, or asks which word completes a sentence. Words answered incorrectly come up more often.
+- **Cards**: flashcards. Each card is marked as known or not known, and cards not known are shown again later in the same deck.
+- **Dictionary**: all entries in alphabetical order, searchable by word or by definition. Each entry has a part of speech, a definition, an example sentence, synonyms and antonyms.
+- **Notebook**: words answered incorrectly that have not yet been learned, with an option to practice only those.
+- **Record**: overall accuracy, number of answers, daily streak, and results for the last 14 days.
+- **Backup**: the record can be copied as text and restored on another device.
 
-Keyboard: `1` to `6` answer, `Enter` next word, `Space` turns a card, arrow keys mark it.
+Keyboard shortcuts: `1` to `6` to answer, `Enter` for the next word, `Space` to turn a card, and the arrow keys to mark it.
 
-## Install
+## Installation
 
 ### Arch Linux
 
-With the PKGBUILD in `linux/`:
+Using the PKGBUILD in `linux/`:
 
 ```sh
 cd linux && makepkg -si
 ```
 
-Or from a clone, for your user only (no root):
+Or from a clone, for the current user only:
 
 ```sh
 make install PREFIX=$HOME/.local
 ```
 
-System-wide: `sudo make install` (into `/usr/local`). Remove with `make uninstall` and the same `PREFIX`.
+To install system-wide, run `sudo make install` (installs into `/usr/local`). `make uninstall` with the same `PREFIX` removes it.
 
-It needs the system Electron (`sudo pacman -S electron`) and Python 3 to build. Other distributions work the same way if `electron` is on your `PATH`; set `VOCABULARY_ELECTRON=/path/to/electron` otherwise.
+The app runs on the system Electron (`sudo pacman -S electron`). Building requires Python 3. Other distributions work if `electron` is on the `PATH`, or if `VOCABULARY_ELECTRON` points to an Electron binary.
 
-### Android (7.0 and newer)
+### Android
 
-Download `Vocabulary.apk` from the Releases page and open it on your phone. Android asks you to allow installs from your browser or file manager the first time. The app has no internet permission.
+Requires Android 7.0 or later. Download `Vocabulary.apk` from the [Releases](https://github.com/lemoon01110/vocabulary/releases) page and open it on the device. Android may ask for permission to install apps from that source.
 
-## Build from source
+## Building from source
 
 ```sh
-make web      # dist/web/index.html, the page every platform uses
-make apk      # dist/Vocabulary.apk
+make web    # builds dist/web/index.html, used by both platforms
+make apk    # builds dist/Vocabulary.apk
 ```
 
-The APK build does not use Gradle. It needs JDK 17+, Python 3 and the Android SDK packages `platforms;android-34` and `build-tools;34.0.0` (`ANDROID_HOME` points at the SDK, default `~/Android/Sdk`). The first build creates a signing key in `android/`; keep it to publish updates that install over earlier versions, and never commit it.
+The Android build uses the SDK tools directly rather than Gradle. It requires JDK 17 or later, Python 3, and the Android SDK packages `platforms;android-34` and `build-tools;34.0.0`. Set `ANDROID_HOME` if the SDK is not in `~/Android/Sdk`. The first build creates a signing key in `android/`. Keep this key to release updates that install over earlier versions, and do not commit it.
 
-## Layout
+## Project layout
 
 ```
-data/words.json     the word list: [word, part of speech, definition, synonyms, antonyms, example]
-web/template.html   the app (HTML, CSS and JS in one file); web/build.py embeds the words
-web/fonts/          Newsreader, the typeface (SIL Open Font License, see OFL.txt)
-linux/              Electron shell, launcher, .desktop entry, icon, PKGBUILD
-android/            WebView shell and the Gradle-free build script
+data/words.json     word list: [word, part of speech, definition, synonyms, antonyms, example]
+web/template.html   the app (HTML, CSS and JavaScript)
+web/build.py        embeds the word list and writes dist/web/
+web/fonts/          Newsreader typeface
+linux/              Electron shell, launcher, desktop entry, icon, PKGBUILD
+android/            WebView shell and build script
 ```
 
-To change the word list, edit `data/words.json` and rebuild.
+The word list can be changed by editing `data/words.json` and rebuilding.
 
-## Credits and license
+## License
 
-Code: MIT (see `LICENSE`). Typeface: Newsreader by Production Type, SIL Open Font License 1.1. The word list draws on common GRE study lists; the definitions, synonyms, antonyms and example sentences were written for this project.
+The code is released under the MIT License (see `LICENSE`). The Newsreader typeface by Production Type is released under the SIL Open Font License 1.1 (see `web/fonts/OFL.txt`). The word list is based on common GRE study lists. The definitions, synonyms, antonyms and example sentences were written for this project.

@@ -2,7 +2,7 @@
 pkgname=gre-vocabulary
 pkgver=1.0.1
 pkgrel=1
-pkgdesc="Offline GRE vocabulary trainer: practice, flashcards and a 2,880-word dictionary"
+pkgdesc="GRE vocabulary study app with practice questions, flashcards and a 2,880-word dictionary"
 arch=('any')
 url="https://github.com/lemoon01110/vocabulary"
 license=('MIT' 'OFL-1.1')
