@@ -1,0 +1,6 @@
+#!/bin/sh
+# Starts Vocabulary with the system Electron (Arch: the "electron" package).
+APP="@APPDIR@"
+E="${VOCABULARY_ELECTRON:-$(command -v electron)}"
+[ -n "$E" ] || { echo "vocabulary: Electron not found. Install it (Arch: sudo pacman -S electron)." >&2; exit 1; }
+exec "$E" "$APP" --ozone-platform-hint=auto "$@"

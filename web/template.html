@@ -1,0 +1,627 @@
+<title>Vocabulary</title>
+<link rel="stylesheet" href="fonts/newsreader.css">
+<style>
+/* Layout: a dictionary page. Running head with guide links and the lifetime figure, one 620px text column, entries set like a printed lexicon. White paper, black ink, one oxblood accent for numbers and section letters. */
+:root{
+  --paper:#FFFFFF; --ink:#1A1A1A; --muted:#707070; --faint:#A3A3A3; --rule:#E4E4E4; --hover:#FAFAF8;
+  --red:#8E1B1B; --good:#2F6B3A; --bad:#A12A2A;
+  --serif:"Newsreader","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:14px 60px;
+  -webkit-font-smoothing:antialiased}
+.page{max-width:620px;margin:0 auto}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+a{color:inherit}
+.sc{font-family:var(--sans);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:oldstyle-nums tabular-nums}
+
+/* running head */
+.head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+.head .mark{font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.head .mark i{color:var(--red);font-style:normal}
+.nav{display:flex;gap:16px;flex-wrap:wrap}
+.nav a{text-decoration:none;font-family:var(--sans);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-bottom:2px}
+.nav a[aria-current="page"]{color:var(--ink);border-bottom:1px solid var(--ink)}
+.head .life{margin-left:auto;font-family:var(--sans);font-size:.72rem;letter-spacing:.08em;color:var(--muted);font-variant-numeric:tabular-nums}
+.head .life b{color:var(--ink);font-weight:600}
+
+/* practice */
+.folio{display:flex;justify-content:space-between;margin-top:30px}
+.entry{margin:6px 0 22px}
+.hw{font-size:clamp(2.2rem,8vw,3rem);font-weight:700;letter-spacing:-.01em;line-height:1.05;margin:0;overflow-wrap:anywhere}
+.hwline{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ps{font-style:italic;color:var(--muted);font-size:1.05rem}
+.say{font-family:var(--sans);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border-bottom:1px dotted var(--faint)}
+.say:hover{color:var(--ink)}
+.cue{font-size:1.3rem;line-height:1.45;margin:0}
+.cue .gap{display:inline-block;width:4.5em;border-bottom:1.5px solid var(--ink);margin:0 .1em}
+.ask{margin:0 0 6px}
+.senses{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.sense{display:grid;grid-template-columns:1.6em 1fr auto;gap:6px;width:100%;padding:12px 2px;border-bottom:1px solid var(--rule);line-height:1.45}
+.sense .n{color:var(--red);font-weight:700;font-variant-numeric:lining-nums}
+.sense .t{min-width:0;overflow-wrap:anywhere}
+.sense .m{font-family:var(--sans);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;align-self:center}
+.sense:hover:not(:disabled) .t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.sense:disabled{cursor:default}
+.sense:disabled .t{color:var(--faint)}
+.sense.right .t{color:var(--ink)} .sense.right .m{color:var(--good)}
+.sense.wrong .t{color:var(--bad);text-decoration:line-through} .sense.wrong .m{color:var(--bad)}
+.isword .t{font-weight:700;font-size:1.1rem}
+
+.def{margin-top:26px;padding-top:16px;border-top:1px solid var(--ink)}
+.def .hwline b{font-size:1.45rem}
+.def p{margin:6px 0 0}
+.def .ex{font-style:italic;color:#3a3a3a}
+.def .ex b{font-style:normal}
+.def .lab{font-family:var(--sans);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.def .mine{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:12px}
+.verdict{font-family:var(--sans);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.verdict.good{color:var(--good)} .verdict.bad{color:var(--bad)}
+.go{margin-top:18px;font-family:var(--sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px}
+
+.opts{margin-top:48px;border-top:1px solid var(--rule)}
+.opts summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:baseline;padding:12px 0}
+.opts summary::-webkit-details-marker{display:none}
+.opts summary::after{content:"Change";margin-left:auto;font-family:var(--sans);font-size:.72rem;color:var(--faint);text-decoration:underline;text-underline-offset:3px}
+.opts[open] summary::after{content:"Done"}
+.opts .sum{font-family:var(--sans);font-size:.8rem;color:var(--muted);min-width:0}
+.opts .rows{display:grid;gap:18px;padding:6px 0 18px}
+.opt-row{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:baseline}
+.opt-row > .sc{width:7.5em;flex:none}
+.pick{font-family:var(--sans);font-size:.8rem;color:var(--muted)}
+.pick[aria-pressed="true"]{color:var(--ink);border-bottom:1px solid var(--ink)}
+select.pick{border:0;border-bottom:1px solid var(--rule);background:transparent;padding:0 2px;color:var(--ink)}
+
+/* cards */
+.deckbar{display:flex;justify-content:space-between;margin-top:30px}
+.fc{position:relative;margin:10px 0 0;min-height:300px;width:100%;border:1px solid var(--rule);border-top:2px solid var(--red);background:var(--paper);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:34px 22px 30px;cursor:pointer;
+  box-shadow:0 1px 0 var(--rule)}
+.fc .hw{font-size:clamp(2.1rem,8vw,2.8rem)}
+.fc .side{font-family:var(--sans);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);position:absolute;top:12px;left:14px}
+.fc .tap{font-family:var(--sans);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-top:22px}
+.fc .back{text-align:left;width:100%;max-width:30em}
+.fc .back .hwline b{font-size:1.4rem}
+.fc .back p{margin:6px 0 0}
+.fc .back .ex{font-style:italic;color:#3a3a3a}
+.fc .back .lab{font-family:var(--sans);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.fc .cue{font-size:1.25rem}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-top:0}
+.grade button{padding:14px 10px;text-align:center;font-family:var(--sans);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.grade button + button{border-left:1px solid var(--rule)}
+.grade .no{color:var(--bad)} .grade .yes{color:var(--good)}
+.grade button:hover{background:var(--hover)}
+.grade button:disabled{color:var(--faint);cursor:default;background:none}
+.fcdone{text-align:center;padding:40px 10px}
+.fcdone b{display:block;font-size:2rem;font-weight:500}
+
+/* dictionary */
+.search{display:flex;gap:10px;align-items:baseline;margin-top:26px;border-bottom:1px solid var(--ink)}
+.search input{flex:1;min-width:0;border:0;background:transparent;font-size:1.3rem;padding:6px 0;outline:none}
+.alpha{display:flex;flex-wrap:wrap;gap:2px 9px;margin:14px 0 6px;font-family:var(--sans);font-size:.8rem}
+.alpha button{color:var(--muted);padding:2px 1px}
+.alpha button[aria-pressed="true"]{color:var(--red);font-weight:700}
+.letter{font-size:3.2rem;font-weight:700;color:var(--red);line-height:1;margin:22px 0 4px}
+.list{columns:1}
+.lex{padding:12px 0;border-bottom:1px solid var(--rule);break-inside:avoid}
+.lex .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.lex .top b{font-size:1.12rem}
+.lex .rec{margin-left:auto;font-family:var(--sans);font-size:.7rem;color:var(--faint);font-variant-numeric:tabular-nums}
+.lex .rec .r{color:var(--good)} .lex .rec .w{color:var(--bad)}
+.lex p{margin:3px 0 0;font-size:.98rem}
+.lex .more{margin-top:6px}
+.lex .ex{font-style:italic;color:#3a3a3a}
+.lex .lab{font-family:var(--sans);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.lex .open{font-family:var(--sans);font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.count{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:10px}
+
+/* record */
+.backup{margin-top:34px;padding-top:12px;border-top:1px solid var(--rule)}
+.backup .row{display:flex;gap:22px;flex-wrap:wrap;align-items:baseline}
+.backup .go{margin-top:0}
+.backup textarea{width:100%;margin:12px 0 8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.75rem;border:1px solid var(--rule);padding:8px;resize:vertical;background:var(--paper);color:var(--ink)}
+.backup .link{font-family:var(--sans);font-size:.82rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.figs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:26px;border-top:1px solid var(--ink)}
+.fig{padding:14px 10px 14px 0;border-bottom:1px solid var(--rule);min-width:0}
+.fig b{display:block;font-size:1.9rem;font-weight:500;line-height:1.1;font-variant-numeric:lining-nums tabular-nums}
+.days{margin-top:28px}
+.day{display:grid;grid-template-columns:7.5em 1fr 4.5em;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule);font-family:var(--sans);font-size:.8rem;font-variant-numeric:tabular-nums}
+.bar{height:5px;background:var(--rule);position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.danger{margin-top:40px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--sans);font-size:.82rem}
+.danger .link{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.confirm{margin-top:10px;display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+.confirm .yes{color:var(--bad);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.confirm .no{color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.note{font-size:.95rem;color:var(--muted);margin-top:14px}
+
+@media (max-width:520px){
+  body{font-size:17px}
+  .head{gap:10px 14px}
+  .head .life{margin-left:0;width:100%}
+  .head .mark{width:100%}
+  .nav{gap:0;width:100%;justify-content:space-between;flex-wrap:nowrap}
+  .nav a{font-size:.6rem;letter-spacing:.05em}
+  .figs{grid-template-columns:repeat(2,1fr)}
+  .opt-row > .sc{width:100%}
+}
+</style>
+
+<div class="page">
+  <header class="head">
+    <span class="mark">Vocabulary<i>.</i></span>
+    <nav class="nav">
+      <a href="#practice" data-v="practice">Practice</a>
+      <a href="#cards" data-v="cards">Cards</a>
+      <a href="#dictionary" data-v="dictionary">Dictionary</a>
+      <a href="#notebook" data-v="notebook">Notebook</a>
+      <a href="#record" data-v="record">Record</a>
+    </nav>
+    <span class="life" id="life"></span>
+  </header>
+
+  <!-- PRACTICE -->
+  <main id="v-practice">
+    <div class="folio"><span class="sc" id="folioL"></span><span class="sc num" id="folioR"></span></div>
+    <div class="entry" id="prompt"></div>
+    <p class="sc ask" id="ask"></p>
+    <div class="senses" id="senses"></div>
+    <section class="def" id="def" hidden></section>
+
+    <details class="opts" id="pOpts">
+      <summary><span class="sc">Options</span><span class="sum" id="pSum"></span></summary>
+      <div class="rows">
+      <div class="opt-row"><span class="sc">Question</span>
+        <span id="optType">
+          <button class="pick" data-type="sense">Word to sense</button> &nbsp;
+          <button class="pick" data-type="word">Sense to word</button> &nbsp;
+          <button class="pick" data-type="blank">Fill the blank</button> &nbsp;
+          <button class="pick" data-type="mixed">Mixed</button>
+        </span></div>
+      <div class="opt-row"><span class="sc">Choices</span>
+        <span id="optN"><button class="pick" data-n="3">3</button> &nbsp; <button class="pick" data-n="4">4</button> &nbsp; <button class="pick" data-n="5">5</button> &nbsp; <button class="pick" data-n="6">6</button></span></div>
+      <div class="opt-row"><span class="sc">Words</span>
+        <label class="pick"><select class="pick" id="optLetter" aria-label="Starting letter"></select></label>
+        <button class="pick" id="optMissed">Only words I've missed</button></div>
+      </div>
+    </details>
+  </main>
+
+  <!-- CARDS -->
+  <main id="v-cards" hidden>
+    <div class="deckbar"><span class="sc" id="deckL"></span><span class="sc num" id="deckR"></span></div>
+    <div id="fcBox"></div>
+    <details class="opts" id="cOpts">
+      <summary><span class="sc">Options</span><span class="sum" id="cSum"></span></summary>
+      <div class="rows">
+      <div class="opt-row"><span class="sc">Front</span>
+        <span id="fcFront"><button class="pick" data-f="word">Word</button> &nbsp; <button class="pick" data-f="sense">Meaning</button></span></div>
+      <div class="opt-row"><span class="sc">Deck</span>
+        <span id="fcDeck"><button class="pick" data-d="new">Not yet seen</button> &nbsp; <button class="pick" data-d="notebook">Notebook</button> &nbsp; <button class="pick" data-d="all">All words</button></span></div>
+      <div class="opt-row"><span class="sc">Letter</span>
+        <label class="pick"><select class="pick" id="fcLetter" aria-label="Starting letter for cards"></select></label>
+        </div>
+      <div class="opt-row"><span class="sc">Size</span>
+        <span id="fcSize"><button class="pick" data-s="10">10</button> &nbsp; <button class="pick" data-s="20">20</button> &nbsp; <button class="pick" data-s="50">50</button></span></div>
+      <p class="note" style="margin:4px 0 0">Tap the card or press Space to turn it. Then mark it: 1 or the left arrow for didn't know, 2 or the right arrow for knew it. Cards you didn't know come back later in the same deck.</p>
+      </div>
+    </details>
+  </main>
+
+  <!-- DICTIONARY -->
+  <main id="v-dictionary" hidden>
+    <div class="search"><input id="q" type="search" placeholder="Look up a word or a meaning" autocomplete="off" spellcheck="false"></div>
+    <div class="alpha" id="alpha"></div>
+    <div id="dictBody"></div>
+  </main>
+
+  <!-- NOTEBOOK -->
+  <main id="v-notebook" hidden>
+    <div class="folio"><span class="sc">Words you have missed</span><span class="sc num" id="nbCount"></span></div>
+    <p class="note" id="nbNote"></p>
+    <div id="nbBody"></div>
+  </main>
+
+  <!-- RECORD -->
+  <main id="v-record" hidden>
+    <div class="figs" id="figs"></div>
+    <div class="days" id="days"></div>
+    <div class="backup">
+      <p class="sc" style="margin:0 0 6px">Backup</p>
+      <p class="note" style="margin:0 0 10px">Your record lives only on this device. To move it to another phone or computer, copy the backup here and paste it there.</p>
+      <div class="row"><button class="go" id="bkCopy">Copy backup</button><button class="go" id="bkOpen">Restore a backup</button></div>
+      <div id="bkBox" hidden>
+        <textarea id="bkText" rows="4" spellcheck="false" aria-label="Backup text"></textarea>
+        <div class="row"><button class="go" id="bkApply">Replace my record with this</button><button class="link" id="bkCancel">Cancel</button></div>
+      </div>
+      <p class="note" id="bkMsg" style="margin:8px 0 0"></p>
+    </div>
+    <div class="danger">
+      <button class="link" id="reset">Reset lifetime record</button>
+      <div class="confirm" id="confirm" hidden>
+        <span>Clear your lifetime record, daily history and notebook? This can't be undone.</span>
+        <button class="no" id="no">Cancel</button>
+        <button class="yes" id="yes">Yes, clear</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const WORDS = __DATA__;
+// WORDS[i] = [word, pos, definition, synonyms, antonyms, sentence]
+const N = WORDS.length;
+const $ = id => document.getElementById(id);
+const rand = n => Math.floor(Math.random() * n);
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const POS = {"noun":"n.","verb":"v.","adjective":"adj.","adverb":"adv.","preposition":"prep.","conjunction":"conj.","abbreviation":"abbr."};
+const ps = p => (p || "").split(" / ").map(x => POS[x] || x).join(", ");
+const dayKey = (d = new Date()) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const INDEX = new Map(WORDS.map((r, i) => [r[0], i]));
+
+/* ---------- record: kept on this device until Reset ---------- */
+const LS = "vocabulary.record.v1";
+const blank = () => ({right:0, wrong:0, words:{}, days:{}, choices:4, type:"sense", letter:"", missedOnly:false, cards:{}, fcFront:"word", fcDeck:"new", fcLetter:"", fcSize:20, updated:0});
+let S = blank();
+try { const s = JSON.parse(localStorage.getItem(LS) || "null"); if (s) S = Object.assign(blank(), s); } catch (e) {}
+// words[w] = [right, wrong, lastOk(1/0), lastDay]; days["YYYY-MM-DD"] = [right, wrong]
+function save() {
+  S.updated = Date.now();
+  try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+}
+
+const rec = w => S.words[w] || [0, 0, 0, 0];
+const mastered = w => { const r = rec(w); return r[0] >= 3 && r[2] === 1 && r[0] > r[1]; };
+function renderLife() {
+  const t = S.right + S.wrong;
+  $("life").innerHTML = t ? "<b>" + (Math.round(S.right / t * 1000) / 10) + "%</b> lifetime &middot; " + S.right.toLocaleString() + " of " + t.toLocaleString()
+                          : "No answers yet";
+}
+
+/* ---------- routing ---------- */
+const VIEWS = ["practice", "cards", "dictionary", "notebook", "record"];
+let view = "practice";
+function route() {
+  const h = location.hash.slice(1);
+  view = VIEWS.includes(h) ? h : "practice";
+  for (const v of VIEWS) $("v-" + v).hidden = v !== view;
+  for (const a of document.querySelectorAll(".nav a")) { if (a.dataset.v === view) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }
+  if (view === "cards" && !fc.deck) newDeck();
+  if (view === "dictionary") renderDict();
+  if (view === "notebook") renderNotebook();
+  if (view === "record") renderRecord();
+  if (view === "practice" && !cur) ask();
+}
+window.addEventListener("hashchange", route);
+
+/* ---------- practice ---------- */
+const mainPos = p => (p || "").split(" / ")[0];
+const byPos = {};
+WORDS.forEach((r, i) => { (byPos[mainPos(r[1])] ||= []).push(i); });
+const stem = w => w.toLowerCase().split(/[ \/(]/)[0];
+function gapRe(w) {
+  const s = stem(w), base = s.length > 4 && /[ey]$/.test(s) ? s.slice(0, -1) : s;
+  return new RegExp("\\b" + base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[a-z]*", "i");
+}
+const missedSet = () => WORDS.map((r, i) => i).filter(i => { const r = rec(WORDS[i][0]); return r[1] > 0 && !mastered(WORDS[i][0]); });
+function pool() {
+  let p = S.missedOnly ? missedSet() : WORDS.map((r, i) => i);
+  if (S.letter) p = p.filter(i => WORDS[i][0][0].toLowerCase() === S.letter);
+  return p;
+}
+const recent = [];
+let cur = null, done = false, timer = null, qNo = 0;
+function pickWord(p) {
+  for (let t = 0; t < 40; t++) {
+    const i = p[rand(p.length)], r = rec(WORDS[i][0]);
+    if (recent.includes(i) && p.length > 40) continue;
+    if (r[1] > r[0] || r[2] === 0 && r[1] > 0) return i;          // shaky words first
+    if (mastered(WORDS[i][0]) && Math.random() < 0.7) continue;     // known words less often
+    return i;
+  }
+  return p[rand(p.length)];
+}
+function distractors(i, count) {
+  const tgt = WORDS[i], used = new Set([i]), out = [], same = byPos[mainPos(tgt[1])] || [];
+  const ok = j => !used.has(j) && WORDS[j][2] !== tgt[2] && stem(WORDS[j][0]) !== stem(tgt[0]);
+  while (out.length < count) {
+    let j = -1;
+    for (let t = 0; t < 60 && j < 0; t++) { const c = (Math.random() < 0.75 && same.length > 20) ? same[rand(same.length)] : rand(N); if (ok(c)) j = c; }
+    if (j < 0) break; used.add(j); out.push(j);
+  }
+  return out;
+}
+function ask() {
+  clearTimeout(timer);
+  let p = pool();
+  if (p.length < 2) { S.missedOnly = false; S.letter = ""; save(); p = pool(); renderOpts(); }
+  const i = pickWord(p);
+  recent.push(i); if (recent.length > 40) recent.shift();
+  let type = S.type === "mixed" ? ["sense", "word", "blank"][rand(3)] : S.type;
+  if (type === "blank" && !gapRe(WORDS[i][0]).test(WORDS[i][5])) type = "sense";
+  const ids = shuffle([i, ...distractors(i, S.choices - 1)]);
+  cur = {i, ids, type}; done = false; qNo++;
+  const r = WORDS[i];
+  $("folioL").textContent = (S.letter ? "Letter " + S.letter.toUpperCase() : "All letters") + (S.missedOnly ? " · missed words" : "");
+  $("folioR").textContent = "No. " + (S.right + S.wrong + 1).toLocaleString();
+  const pr = $("prompt");
+  if (type === "sense") {
+    pr.innerHTML = '<div class="hwline"><h1 class="hw">' + esc(r[0]) + '</h1><span class="ps">' + esc(ps(r[1])) + "</span>" + sayBtn(r[0]) + "</div>";
+    $("ask").textContent = "Choose the sense";
+  } else if (type === "word") {
+    pr.innerHTML = '<p class="cue">' + esc(r[2]) + '</p><span class="ps">' + esc(ps(r[1])) + "</span>";
+    $("ask").textContent = "Which word has this sense";
+  } else {
+    pr.innerHTML = '<p class="cue">' + esc(r[5]).replace(gapRe(r[0]), '<span class="gap" aria-label="blank"></span>') + "</p>";
+    $("ask").textContent = "Which word fills the blank";
+  }
+  const box = $("senses"); box.innerHTML = "";
+  ids.forEach((j, k) => {
+    const b = document.createElement("button");
+    b.className = "sense" + (type === "sense" ? "" : " isword");
+    b.innerHTML = '<span class="n">' + (k + 1) + '</span><span class="t">' + esc(type === "sense" ? WORDS[j][2] : WORDS[j][0]) + '</span><span class="m"></span>';
+    b.addEventListener("click", () => answer(k));
+    box.appendChild(b);
+  });
+  $("def").hidden = true;
+  wireSay(pr);
+}
+function sayBtn(w) { return ""; }
+function wireSay(root) {
+  for (const b of root.querySelectorAll("[data-say]")) b.addEventListener("click", e => {
+    e.stopPropagation();
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(b.dataset.say); u.lang = "en-US"; u.rate = .9; speechSynthesis.speak(u); } catch (err) {}
+  });
+}
+function answer(k) {
+  if (done) return;
+  done = true;
+  const r = WORDS[cur.i], ok = cur.ids[k] === cur.i;
+  [...document.querySelectorAll("#senses .sense")].forEach((b, j) => {
+    b.disabled = true;
+    if (cur.ids[j] === cur.i) { b.classList.add("right"); b.querySelector(".m").textContent = "Correct"; }
+    else if (j === k) { b.classList.add("wrong"); b.querySelector(".m").textContent = "Your pick"; }
+  });
+  const w = rec(r[0]).slice(), d = dayKey(), dd = S.days[d] || [0, 0];
+  if (ok) { S.right++; w[0]++; dd[0]++; } else { S.wrong++; w[1]++; dd[1]++; }
+  w[2] = ok ? 1 : 0; w[3] = d; S.words[r[0]] = w; S.days[d] = dd;
+  save(); renderLife();
+  const def = $("def");
+  def.innerHTML = entryHTML(cur.i, true) +
+    '<p class="mine">' + (ok ? '<span class="verdict good">Correct</span>' : '<span class="verdict bad">Incorrect</span>') +
+    " &nbsp; Your record for this word: " + w[0] + " right, " + w[1] + " wrong" + (mastered(r[0]) ? " &middot; known" : "") + "</p>" +
+    '<button class="go" id="next">Next word</button>';
+  def.hidden = false;
+  wireSay(def);
+  $("next").addEventListener("click", ask);
+}
+function entryHTML(i, big) {
+  const r = WORDS[i], ex = esc(r[5]).replace(gapRe(r[0]), m => "<b>" + m + "</b>");
+  return '<div class="hwline"><b>' + esc(r[0]) + '</b><span class="ps">' + esc(ps(r[1])) + "</span>" + (big ? sayBtn(r[0]) : "") + "</div>" +
+    "<p>" + esc(r[2]) + "</p>" +
+    '<p class="ex">' + ex + "</p>" +
+    (r[3] ? '<p><span class="lab">Syn</span>' + esc(r[3]) + "</p>" : "") +
+    (r[4] ? '<p><span class="lab">Ant</span>' + esc(r[4]) + "</p>" : "");
+}
+
+/* practice options */
+function renderOpts() {
+  const tn = {sense:"Word to sense", word:"Sense to word", blank:"Fill the blank", mixed:"Mixed"}[S.type];
+  $("pSum").textContent = tn + " · " + S.choices + " choices · " + (S.letter ? "letter " + S.letter.toUpperCase() : "all letters") + (S.missedOnly ? " · missed words only" : "");
+  for (const b of document.querySelectorAll("#optType .pick")) b.setAttribute("aria-pressed", b.dataset.type === S.type);
+  for (const b of document.querySelectorAll("#optN .pick")) b.setAttribute("aria-pressed", +b.dataset.n === S.choices);
+  $("optMissed").setAttribute("aria-pressed", S.missedOnly);
+  $("optMissed").textContent = "Only words I've missed (" + missedSet().length + ")";
+  $("optLetter").value = S.letter;
+}
+const LETTERS = [...new Set(WORDS.map(r => r[0][0].toLowerCase()))].filter(c => /[a-z]/.test(c)).sort();
+$("optLetter").innerHTML = '<option value="">All letters</option>' + LETTERS.map(c => '<option value="' + c + '">' + c.toUpperCase() + "</option>").join("");
+$("fcLetter").innerHTML = $("optLetter").innerHTML;
+$("optType").addEventListener("click", e => { const b = e.target.closest("[data-type]"); if (!b) return; S.type = b.dataset.type; save(); renderOpts(); if (!done) ask(); });
+$("optN").addEventListener("click", e => { const b = e.target.closest("[data-n]"); if (!b) return; S.choices = +b.dataset.n; save(); renderOpts(); if (!done) ask(); });
+$("optLetter").addEventListener("change", e => { S.letter = e.target.value; save(); renderOpts(); ask(); });
+$("optMissed").addEventListener("click", () => {
+  if (!S.missedOnly && missedSet().length < 2) { $("optMissed").textContent = "Miss at least 2 words first"; return; }
+  S.missedOnly = !S.missedOnly; save(); renderOpts(); ask();
+});
+
+/* ---------- flashcards ---------- */
+// S.cards[w] = [knew, didn't know, last day]; separate from the lifetime quiz record
+const fc = {deck:null, pos:0, flipped:false, knew:0, missed:0, seen:new Set()};
+const cardRec = w => S.cards[w] || [0, 0, ""];
+function deckPool() {
+  let p = WORDS.map((r, i) => i);
+  if (S.fcLetter) p = p.filter(i => WORDS[i][0][0].toLowerCase() === S.fcLetter);
+  if (S.fcDeck === "new") p = p.filter(i => { const w = WORDS[i][0], a = rec(w), c = cardRec(w); return a[0] + a[1] + c[0] + c[1] === 0; });
+  if (S.fcDeck === "notebook") { const m = new Set(missedSet()); p = p.filter(i => m.has(i) || cardRec(WORDS[i][0])[1] > cardRec(WORDS[i][0])[0]); }
+  return p;
+}
+function newDeck() {
+  const p = shuffle(deckPool());
+  fc.deck = p.slice(0, S.fcSize); fc.pos = 0; fc.flipped = false; fc.knew = 0; fc.missed = 0; fc.seen = new Set();
+  renderFcOpts(); drawCard();
+}
+function drawCard() {
+  const box = $("fcBox");
+  const label = {new:"Not yet seen", notebook:"Notebook", all:"All words"}[S.fcDeck] + (S.fcLetter ? " · " + S.fcLetter.toUpperCase() : "");
+  $("deckL").textContent = label;
+  if (!fc.deck.length) {
+    $("deckR").textContent = "";
+    box.innerHTML = '<div class="fc" style="cursor:default"><p class="cue">' + (S.fcDeck === "notebook" ? "Your notebook is empty for this choice." : "No cards match this choice.") + '</p><p class="note">Pick another deck or letter below.</p></div>';
+    return;
+  }
+  if (fc.pos >= fc.deck.length) {
+    const t = fc.knew + fc.missed;
+    $("deckR").textContent = "Done";
+    box.innerHTML = '<div class="fc" style="cursor:default"><div class="fcdone"><b>' + fc.knew + " of " + fc.seen.size + '</b><span class="sc">Knew it on the first try</span>' +
+      '<p class="note">' + t + " turns in all. Missed cards stay in your Notebook deck.</p>" +
+      '<button class="go" id="fcAgain">New deck</button></div></div>';
+    $("fcAgain").addEventListener("click", newDeck);
+    return;
+  }
+  const i = fc.deck[fc.pos], r = WORDS[i], c = cardRec(r[0]);
+  $("deckR").textContent = "Card " + Math.min(fc.pos + 1, fc.deck.length) + " of " + fc.deck.length;
+  const front = S.fcFront === "word"
+    ? '<h1 class="hw">' + esc(r[0]) + '</h1><span class="ps" style="margin-top:4px">' + esc(ps(r[1])) + "</span>"
+    : '<p class="cue">' + esc(r[2]) + '</p><span class="ps" style="margin-top:8px">' + esc(ps(r[1])) + "</span>";
+  const back = '<div class="back">' + entryHTML(i, true) +
+    '<p class="mine" style="font-family:var(--sans);font-size:.76rem;color:var(--muted);margin-top:12px">Cards: knew it ' + c[0] + ", didn't know " + c[1] + "</p></div>";
+  box.innerHTML = '<div class="fc" id="fcCard" role="button" tabindex="0" aria-label="Turn the card"><span class="side">' + (fc.flipped ? "Back" : "Front") + "</span>" +
+    (fc.flipped ? back : front + '<span class="tap">Tap to turn</span>') + "</div>" +
+    '<div class="grade"><button class="no" id="fcNo"' + (fc.flipped ? "" : " disabled") + '>Didn\'t know</button><button class="yes" id="fcYes"' + (fc.flipped ? "" : " disabled") + ">Knew it</button></div>";
+  $("fcCard").addEventListener("click", e => { if (e.target.closest("[data-say]")) return; flip(); });
+  $("fcNo").addEventListener("click", () => grade(false));
+  $("fcYes").addEventListener("click", () => grade(true));
+  wireSay(box);
+}
+function flip() { if (fc.pos >= fc.deck.length) return; fc.flipped = !fc.flipped; drawCard(); }
+function grade(ok) {
+  if (!fc.flipped || fc.pos >= fc.deck.length) return;
+  const i = fc.deck[fc.pos], w = WORDS[i][0], c = cardRec(w).slice();
+  if (ok) c[0]++; else c[1]++;
+  c[2] = dayKey(); S.cards[w] = c; save();
+  const first = !fc.seen.has(i); fc.seen.add(i);
+  if (ok) { if (first) fc.knew++; }
+  else { fc.missed++; fc.deck.splice(Math.min(fc.deck.length, fc.pos + 5), 0, i); }   // comes back in about 5 cards
+  fc.pos++; fc.flipped = false; drawCard();
+}
+function renderFcOpts() {
+  $("cSum").textContent = (S.fcFront === "word" ? "Word on front" : "Meaning on front") + " · " + {new:"not yet seen", notebook:"notebook", all:"all words"}[S.fcDeck] + " · " + (S.fcLetter ? "letter " + S.fcLetter.toUpperCase() : "all letters") + " · " + S.fcSize + " cards";
+  for (const b of document.querySelectorAll("#fcFront .pick")) b.setAttribute("aria-pressed", b.dataset.f === S.fcFront);
+  for (const b of document.querySelectorAll("#fcDeck .pick")) b.setAttribute("aria-pressed", b.dataset.d === S.fcDeck);
+  for (const b of document.querySelectorAll("#fcSize .pick")) b.setAttribute("aria-pressed", +b.dataset.s === S.fcSize);
+  $("fcLetter").value = S.fcLetter;
+}
+$("fcFront").addEventListener("click", e => { const b = e.target.closest("[data-f]"); if (!b) return; S.fcFront = b.dataset.f; save(); renderFcOpts(); drawCard(); });
+$("fcDeck").addEventListener("click", e => { const b = e.target.closest("[data-d]"); if (!b) return; S.fcDeck = b.dataset.d; save(); newDeck(); });
+$("fcSize").addEventListener("click", e => { const b = e.target.closest("[data-s]"); if (!b) return; S.fcSize = +b.dataset.s; save(); newDeck(); });
+$("fcLetter").addEventListener("change", e => { S.fcLetter = e.target.value; save(); newDeck(); });
+
+/* ---------- dictionary ---------- */
+let dictLetter = "a";
+$("alpha").innerHTML = LETTERS.map(c => '<button data-l="' + c + '">' + c.toUpperCase() + "</button>").join("");
+$("alpha").addEventListener("click", e => { const b = e.target.closest("[data-l]"); if (!b) return; dictLetter = b.dataset.l; $("q").value = ""; renderDict(); });
+$("q").addEventListener("input", () => renderDict());
+function recHTML(w) { const r = rec(w); return r[0] + r[1] ? '<span class="rec"><span class="r">' + r[0] + '</span> / <span class="w">' + r[1] + "</span></span>" : '<span class="rec">not yet seen</span>'; }
+function lexHTML(i) {
+  const r = WORDS[i];
+  return '<div class="lex" data-i="' + i + '"><div class="top"><b>' + esc(r[0]) + '</b><span class="ps">' + esc(ps(r[1])) + "</span>" + recHTML(r[0]) + "</div>" +
+    "<p>" + esc(r[2]) + '</p><div class="more" hidden></div><button class="open">Example and synonyms</button></div>';
+}
+function wireLex(root) {
+  root.addEventListener("click", e => {
+    const b = e.target.closest(".open"); if (!b) return;
+    const lex = b.closest(".lex"), more = lex.querySelector(".more"), r = WORDS[+lex.dataset.i];
+    if (more.hidden) {
+      more.innerHTML = '<p class="ex">' + esc(r[5]).replace(gapRe(r[0]), m => "<b>" + m + "</b>") + "</p>" +
+        (r[3] ? '<p><span class="lab">Syn</span>' + esc(r[3]) + "</p>" : "") + (r[4] ? '<p><span class="lab">Ant</span>' + esc(r[4]) + "</p>" : "");
+      more.hidden = false; b.textContent = "Hide";
+    } else { more.hidden = true; b.textContent = "Example and synonyms"; }
+  });
+}
+function renderDict() {
+  const q = $("q").value.trim().toLowerCase();
+  for (const b of $("alpha").querySelectorAll("button")) b.setAttribute("aria-pressed", !q && b.dataset.l === dictLetter);
+  let ids, head;
+  if (q) {
+    const starts = [], has = [], inDef = [];
+    WORDS.forEach((r, i) => { const w = r[0].toLowerCase(); if (w.startsWith(q)) starts.push(i); else if (w.includes(q)) has.push(i); else if (q.length > 2 && (r[2] + " " + r[3]).toLowerCase().includes(q)) inDef.push(i); });
+    ids = [...starts, ...has, ...inDef].slice(0, 120);
+    head = '<p class="count">' + (ids.length ? ids.length + (ids.length === 120 ? "+" : "") + " entries" : "No entries match.") + "</p>";
+  } else {
+    ids = WORDS.map((r, i) => i).filter(i => WORDS[i][0][0].toLowerCase() === dictLetter);
+    head = '<div class="letter">' + dictLetter.toUpperCase() + '</div><p class="count">' + ids.length + " entries</p>";
+  }
+  $("dictBody").innerHTML = head + '<div class="list">' + ids.map(lexHTML).join("") + "</div>";
+}
+wireLex($("dictBody"));
+
+/* ---------- notebook ---------- */
+function renderNotebook() {
+  const ids = missedSet().sort((a, b) => { const x = rec(WORDS[a][0]), y = rec(WORDS[b][0]); return (y[1] - y[0]) - (x[1] - x[0]) || WORDS[a][0].localeCompare(WORDS[b][0]); });
+  $("nbCount").textContent = ids.length ? ids.length + " words" : "";
+  $("nbNote").innerHTML = ids.length
+    ? 'Words you have gotten wrong and not yet learned, hardest first. A word leaves the notebook once you get it right 3 times and more often than wrong. <button class="go" id="nbPractice" style="margin:0 0 0 6px">Practice these</button>'
+    : "Nothing here yet. Words you miss in Practice are collected here.";
+  $("nbBody").innerHTML = '<div class="list">' + ids.map(lexHTML).join("") + "</div>";
+  const b = $("nbPractice"); if (b) b.addEventListener("click", () => { S.missedOnly = true; S.letter = ""; save(); renderOpts(); location.hash = "#practice"; ask(); });
+}
+wireLex($("nbBody"));
+
+/* ---------- record ---------- */
+function streak() {
+  let n = 0; const d = new Date();
+  if (!S.days[dayKey(d)]) d.setDate(d.getDate() - 1);
+  while (S.days[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function renderRecord() {
+  const t = S.right + S.wrong, seen = Object.keys(S.words).length, known = Object.keys(S.words).filter(mastered).length;
+  const today = S.days[dayKey()] || [0, 0], tt = today[0] + today[1];
+  const fig = (v, l) => '<div class="fig"><b>' + v + '</b><span class="sc">' + l + "</span></div>";
+  $("figs").innerHTML =
+    fig(t ? (Math.round(S.right / t * 1000) / 10) + "%" : "0%", "Lifetime correct") +
+    fig(t.toLocaleString(), "Answers") +
+    fig(streak() + (streak() === 1 ? " day" : " days"), "Daily streak") +
+    fig(seen.toLocaleString() + "<small style='font-size:.5em;color:var(--muted)'> / " + N.toLocaleString() + "</small>", "Words seen") +
+    fig(known.toLocaleString(), "Words known") +
+    fig(tt ? (Math.round(today[0] / tt * 100)) + "%" : "&ndash;", "Today, " + tt + " answers");
+  const rows = []; const d = new Date();
+  for (let k = 0; k < 14; k++) {
+    const key = dayKey(d), v = S.days[key] || [0, 0], n = v[0] + v[1];
+    rows.push('<div class="day"><span>' + d.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}) + '</span><span class="bar"><i style="width:' + (n ? v[0] / n * 100 : 0) + '%"></i></span><span style="text-align:right">' + (n ? Math.round(v[0] / n * 100) + "% of " + n : "&ndash;") + "</span></div>");
+    d.setDate(d.getDate() - 1);
+  }
+  $("days").innerHTML = '<p class="sc" style="margin:0 0 4px">Last 14 days, share correct</p>' + rows.join("");
+}
+$("reset").addEventListener("click", () => { $("confirm").hidden = false; $("no").focus(); });
+$("no").addEventListener("click", () => { $("confirm").hidden = true; });
+$("yes").addEventListener("click", () => {
+  const keep = {choices:S.choices, type:S.type, fcFront:S.fcFront, fcDeck:S.fcDeck, fcSize:S.fcSize};
+  S = Object.assign(blank(), keep); save(); renderLife(); renderRecord(); renderOpts(); $("confirm").hidden = true; cur = null; fc.deck = null;
+});
+
+/* backup and restore */
+function backupText() { return "VOCAB1:" + btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
+$("bkCopy").addEventListener("click", () => {
+  const t = backupText();
+  const fallback = () => { $("bkBox").hidden = false; $("bkText").value = t; $("bkText").select(); $("bkApply").hidden = true; $("bkMsg").textContent = "Select all of the text above and copy it."; };
+  try { navigator.clipboard.writeText(t).then(() => { $("bkMsg").textContent = "Backup copied. Paste it into Restore on your other device."; }, fallback); } catch (e) { fallback(); }
+});
+$("bkOpen").addEventListener("click", () => { $("bkBox").hidden = false; $("bkApply").hidden = false; $("bkText").value = ""; $("bkText").focus(); $("bkMsg").textContent = "Paste a backup, then confirm."; });
+$("bkCancel").addEventListener("click", () => { $("bkBox").hidden = true; $("bkMsg").textContent = ""; });
+$("bkApply").addEventListener("click", () => {
+  try {
+    const raw = $("bkText").value.trim();
+    if (!raw.startsWith("VOCAB1:")) throw 0;
+    const data = JSON.parse(decodeURIComponent(escape(atob(raw.slice(7)))));
+    if (typeof data.right !== "number" || typeof data.words !== "object") throw 0;
+    S = Object.assign(blank(), data); save(); renderLife(); renderOpts(); renderRecord(); cur = null; fc.deck = null;
+    $("bkBox").hidden = true; $("bkMsg").textContent = "Restored: " + (S.right + S.wrong).toLocaleString() + " answers.";
+  } catch (e) { $("bkMsg").textContent = "That doesn't look like a Vocabulary backup. Copy it again from the other device."; }
+});
+
+/* keyboard */
+document.addEventListener("keydown", e => {
+  if (e.target.matches("input,select,textarea")) return;
+  if (view === "cards") {
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); if (fc.deck && fc.pos >= fc.deck.length) newDeck(); else flip(); }
+    else if (fc.flipped && (e.key === "1" || e.key === "ArrowLeft")) grade(false);
+    else if (fc.flipped && (e.key === "2" || e.key === "ArrowRight")) grade(true);
+    return;
+  }
+  if (view !== "practice") return;
+  if (!done && cur) { const n = parseInt(e.key, 10); if (n >= 1 && n <= cur.ids.length) answer(n - 1); }
+  else if (done && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); ask(); }
+});
+
+renderLife(); renderOpts(); route();
+</script>

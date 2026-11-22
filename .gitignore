@@ -1,0 +1,6 @@
+dist/
+android/build/
+# Android signing key: personal, never commit it
+android/*.keystore
+android/keystore.pass
+*.apk

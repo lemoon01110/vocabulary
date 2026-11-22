@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Vocabulary
+GenericName=Vocabulary Trainer
+Comment=Offline GRE vocabulary practice, flashcards and dictionary
+Exec=@BINDIR@/vocabulary
+Icon=vocabulary
+Terminal=false
+Categories=Education;Languages;
+Keywords=gre;vocab;vocabulary;flashcards;dictionary;words;
+StartupWMClass=Vocabulary
