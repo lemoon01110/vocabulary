@@ -40,8 +40,8 @@ a{color:inherit}
 .ps{font-style:italic;color:var(--muted);font-size:1.05rem}
 .pr{color:var(--muted);font-size:.98rem;white-space:nowrap}
 .pr .ipa{font-family:"Charis SIL","Doulos SIL","Gentium Plus","Noto Serif","DejaVu Serif",serif;color:var(--faint);margin-left:8px;font-size:.9em}
-.rare{font-family:var(--sans);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--red);border:1px solid currentColor;padding:0 4px;align-self:center}
 .sn{display:grid;grid-template-columns:1.4em 1fr;gap:0 4px;margin:8px 0 0}
+.sn.asked{background:#F6F1E7;margin-left:-6px;padding:4px 6px}
 .sn .k{color:var(--red);font-weight:700;font-variant-numeric:lining-nums}
 .sn p{margin:0}
 .sn .ex{font-style:italic;color:#3a3a3a;margin-top:2px}
@@ -350,8 +350,9 @@ window.addEventListener("hashchange", route);
 
 /* ---------- practice ---------- */
 const mainPos = p => (p || "").split(" / ")[0];
+// every sense of every word, grouped by part of speech: byPos[pos] = [[word index, sense index], ...]
 const byPos = {};
-WORDS.forEach((r, i) => { (byPos[mainPos(r[1])] ||= []).push(i); });
+WORDS.forEach((r, i) => r[10].forEach((x, k) => (byPos[x[0]] ||= []).push([i, k])));
 const stem = w => w.toLowerCase().split(/[ \/(]/)[0];
 function gapRe(w) {
   const s = stem(w), base = s.length > 4 && /[ey]$/.test(s) ? s.slice(0, -1) : s;
@@ -376,13 +377,19 @@ function pickWord(p) {
   }
   return p[rand(p.length)];
 }
-function distractors(i, count) {
-  const tgt = WORDS[i], used = new Set([i]), out = [], same = byPos[mainPos(tgt[1])] || [];
-  const ok = j => !used.has(j) && WORDS[j][2] !== tgt[2] && stem(WORDS[j][0]) !== stem(tgt[0]);
+// wrong choices for sense k of word i: other words, each with one of its senses (same part of speech when possible)
+function distractors(i, k, count) {
+  const tgt = WORDS[i], def = tgt[10][k][1], used = new Set([i]), out = [], same = byPos[tgt[10][k][0]] || [];
+  const ok = ([j, m]) => !used.has(j) && WORDS[j][10][m][1] !== def && stem(WORDS[j][0]) !== stem(tgt[0]);
   while (out.length < count) {
-    let j = -1;
-    for (let t = 0; t < 60 && j < 0; t++) { const c = (Math.random() < 0.75 && same.length > 20) ? same[rand(same.length)] : rand(N); if (ok(c)) j = c; }
-    if (j < 0) break; used.add(j); out.push(j);
+    let c = null;
+    for (let t = 0; t < 60 && !c; t++) {
+      let x;
+      if (Math.random() < 0.75 && same.length > 20) x = same[rand(same.length)];
+      else { const j = rand(N); x = [j, rand(WORDS[j][10].length)]; }
+      if (ok(x)) c = x;
+    }
+    if (!c) break; used.add(c[0]); out.push(c);
   }
   return out;
 }
@@ -392,37 +399,44 @@ function ask() {
   if (p.length < 2) { S.missedOnly = false; S.letter = ""; S.level = ""; save(); p = pool(); renderOpts(); }
   const i = pickWord(p);
   recent.push(i); if (recent.length > 40) recent.shift();
-  let type = S.type === "mixed" ? ["sense", "word", "blank"][rand(3)] : S.type;
-  if (type === "blank" && !gapRe(WORDS[i][0]).test(WORDS[i][5])) type = "sense";
-  const ids = shuffle([i, ...distractors(i, S.choices - 1)]);
-  cur = {i, ids, type}; done = false; qNo++;
   const r = WORDS[i];
+  let type = S.type === "mixed" ? ["sense", "word", "blank"][rand(3)] : S.type;
+  // ask about one of the word's senses, picked at random, so every meaning gets practised
+  let k = rand(r[10].length);
+  if (type === "blank") {
+    const fit = r[10].map((x, m) => m).filter(m => gapRe(r[0]).test(r[10][m][2]));
+    if (fit.length) { if (!fit.includes(k)) k = fit[rand(fit.length)]; } else type = "sense";
+  }
+  const sn = r[10][k];
+  const opts = shuffle([[i, k], ...distractors(i, k, S.choices - 1)]);
+  const ids = opts.map(o => o[0]);
+  cur = {i, k, ids, opts, type}; done = false; qNo++;
   $("folioL").textContent = (S.letter ? "Letter " + S.letter.toUpperCase() : "All letters") + (S.missedOnly ? " · missed words" : "");
   $("folioR").textContent = "No. " + (S.right + S.wrong + 1).toLocaleString();
   const pr = $("prompt");
   if (type === "sense") {
-    pr.innerHTML = '<div class="hwline"><h1 class="hw">' + esc(r[0]) + '</h1><span class="ps">' + esc(ps(r[1])) + "</span>" + rareTag(r) + "</div>" + '<div class="pr" style="margin-top:6px">' + prHTML(r) + "</div>";
-    $("ask").textContent = "Choose the sense";
+    pr.innerHTML = '<div class="hwline"><h1 class="hw">' + esc(r[0]) + '</h1><span class="ps">' + esc(POS[sn[0]] || sn[0]) + "</span></div>" + '<div class="pr" style="margin-top:6px">' + prHTML(r) + "</div>";
+    $("ask").textContent = r[10].length > 1 ? "Choose a sense of this word (it has " + r[10].length + ")" : "Choose the sense";
   } else if (type === "word") {
-    pr.innerHTML = '<p class="cue">' + esc(r[2]) + '</p><span class="ps">' + esc(ps(r[1])) + "</span>";
+    pr.innerHTML = '<p class="cue">' + esc(sn[1]) + '</p><span class="ps">' + esc(POS[sn[0]] || sn[0]) + "</span>";
     $("ask").textContent = "Which word has this sense";
   } else {
-    pr.innerHTML = '<p class="cue">' + esc(r[5]).replace(gapRe(r[0]), '<span class="gap" aria-label="blank"></span>') + "</p>";
+    pr.innerHTML = '<p class="cue">' + esc(sn[2]).replace(gapRe(r[0]), '<span class="gap" aria-label="blank"></span>') + "</p>";
     $("ask").textContent = "Which word fills the blank";
   }
   const box = $("senses"); box.innerHTML = "";
-  ids.forEach((j, k) => {
+  opts.forEach(([j, m], n) => {
     const b = document.createElement("button");
     b.className = "sense" + (type === "sense" ? "" : " isword");
-    b.innerHTML = '<span class="n">' + (k + 1) + '</span><span class="t">' + esc(type === "sense" ? WORDS[j][2] : WORDS[j][0]) + '</span><span class="m"></span>';
-    b.addEventListener("click", () => answer(k));
+    b.innerHTML = '<span class="n">' + (n + 1) + '</span><span class="t">' + esc(type === "sense" ? WORDS[j][10][m][1] : WORDS[j][0]) + '</span><span class="m"></span>';
+    b.addEventListener("click", () => answer(n));
     box.appendChild(b);
   });
   $("def").hidden = true;
   wireSay(pr);
 }
 function sayBtn(w) { return ""; }
-const rareTag = r => r[9] === 1 ? '<span class="rare">Rare</span>' : "";
+
 // respelling with the stressed syllable in capitals, then IPA
 const prHTML = r => r[6] ? esc(r[6]) + (r[7] ? '<span class="ipa">' + esc(r[7]) + "</span>" : "") : "";
 const boldWord = (r, t) => esc(t).replace(gapRe(r[0]), m => "<b>" + m + "</b>");
@@ -462,12 +476,14 @@ function answer(k) {
     " &nbsp; Your record for this word: " + w[0] + " right, " + w[1] + " wrong" + (mastered(r[0]) ? " &middot; known" : "") + "</p>" +
     '<button class="go" id="next">Next word</button>';
   def.hidden = false;
+  const asked = def.querySelectorAll(".sn")[cur.k];   // mark the sense this question was about
+  if (asked && WORDS[cur.i][10].length > 1) asked.classList.add("asked");
   wireSay(def);
   $("next").addEventListener("click", ask);
 }
 function entryHTML(i) {
   const r = WORDS[i];
-  return '<div class="hwline"><b>' + esc(r[0]) + '</b><span class="pr">' + prHTML(r) + "</span>" + rareTag(r) + "</div>" +
+  return '<div class="hwline"><b>' + esc(r[0]) + '</b><span class="pr">' + prHTML(r) + "</span>" + "</div>" +
     sensesHTML(r) + '<div style="margin-top:10px">' + detailHTML(r) + "</div>";
 }
 
@@ -537,7 +553,7 @@ function drawCard() {
   $("deckR").textContent = "Card " + Math.min(fc.pos + 1, fc.deck.length) + " of " + fc.deck.length;
   const front = S.fcFront === "word"
     ? '<h1 class="hw">' + esc(r[0]) + '</h1><span class="pr" style="margin-top:6px">' + prHTML(r) + '</span><span class="ps" style="margin-top:4px">' + esc(ps(r[1])) + "</span>"
-    : '<p class="cue">' + esc(r[2]) + '</p><span class="ps" style="margin-top:8px">' + esc(ps(r[1])) + "</span>";
+    : r[10].map((x, m) => '<p class="cue" style="margin:4px 0">' + (r[10].length > 1 ? '<b style="color:var(--red)">' + (m + 1) + "</b> " : "") + '<i class="ps">' + esc(POS[x[0]] || x[0]) + "</i> " + esc(x[1]) + "</p>").join("");
   const back = '<div class="back">' + entryHTML(i) +
     '<p class="mine" style="font-family:var(--sans);font-size:.76rem;color:var(--muted);margin-top:12px">Cards: knew it ' + c[0] + ", didn't know " + c[1] + "</p></div>";
   box.innerHTML = '<div class="fc" id="fcCard" role="button" tabindex="0" aria-label="Turn the card"><span class="side">' + (fc.flipped ? "Back" : "Front") + "</span>" +
@@ -582,7 +598,7 @@ function recHTML(w) { const r = rec(w); return r[0] + r[1] ? '<span class="rec">
 function lexHTML(i) {
   const r = WORDS[i];
   const defs = r[10].length > 1 ? r[10].map((s, k) => "<b class=\"k\">" + (k + 1) + "</b> " + '<i class="ps" style="font-size:.95em">' + esc(POS[s[0]] || s[0]) + "</i> " + esc(s[1])).join(" &nbsp;") : '<i class="ps" style="font-size:.95em">' + esc(ps(r[1])) + "</i> " + esc(r[2]);
-  return '<div class="lex" data-i="' + i + '"><div class="top"><b>' + esc(r[0]) + '</b><span class="pr">' + prHTML(r) + "</span>" + rareTag(r) + recHTML(r[0]) + "</div>" +
+  return '<div class="lex" data-i="' + i + '"><div class="top"><b>' + esc(r[0]) + '</b><span class="pr">' + prHTML(r) + "</span>" + recHTML(r[0]) + "</div>" +
     '<p class="defs">' + defs + '</p><div class="more" hidden></div><button class="open">Examples and origin</button></div>';
 }
 function wireLex(root) {
