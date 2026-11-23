@@ -288,7 +288,7 @@ const INDEX = new Map(WORDS.map((r, i) => [r[0], i]));
 
 /* ---------- record: kept on this device until Reset ---------- */
 const LS = "vocabulary.record.v1";
-const blank = () => ({right:0, wrong:0, words:{}, days:{}, choices:4, type:"sense", letter:"", missedOnly:false, cards:{}, fcFront:"word", fcDeck:"new", fcLetter:"", fcSize:20, level:"", updated:0});
+const blank = () => ({right:0, wrong:0, words:{}, days:{}, choices:4, type:"sense", letter:"", missedOnly:false, cards:{}, fcFront:"word", fcDeck:"new", fcLetter:"", fcSize:20, level:"", qSeen:[], cSeen:[], due:[], qn:0, updated:0});
 // Rebuild a record from untrusted JSON (a pasted backup or stored data): known keys only, numbers checked.
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 const WORDSET = new Set(WORDS.map(r => r[0]));
@@ -308,6 +308,9 @@ function clean(raw) {
   o.fcSize = [10, 20, 50].includes(raw.fcSize) ? raw.fcSize : 20;
   o.level = ["gre", "rare"].includes(raw.level) ? raw.level : "";
   o.updated = num(raw.updated, 0, 1e15, 0);
+  const wl = v => Array.isArray(v) ? [...new Set(v.filter(w => WORDSET.has(w)))] : [];
+  o.qSeen = wl(raw.qSeen); o.cSeen = wl(raw.cSeen); o.qn = num(raw.qn, 0, BIG, 0);
+  o.due = Array.isArray(raw.due) ? raw.due.filter(d => Array.isArray(d) && WORDSET.has(d[0])).map(d => [d[0], num(d[1], 0, BIG, 0)]).slice(-200) : [];
   const day = v => typeof v === "string" && DAY_RE.test(v) ? v : "";
   for (const [w, v] of Object.entries(raw.words && typeof raw.words === "object" ? raw.words : {}))
     if (WORDSET.has(w) && Array.isArray(v)) o.words[w] = [num(v[0], 0, BIG, 0), num(v[1], 0, BIG, 0), v[2] === 1 ? 1 : 0, day(v[3])];
@@ -368,17 +371,23 @@ function pool() {
   if (S.letter) p = p.filter(i => WORDS[i][0][0].toLowerCase() === S.letter);
   return p;
 }
-const recent = [];
 let cur = null, done = false, timer = null, qNo = 0;
+// Every word in the chosen set comes up once, in random order, before any word repeats (a "round").
+// The round is saved, so switching tabs or closing the app does not start it over.
+// A missed word comes back once, about 6 questions later.
 function pickWord(p) {
-  for (let t = 0; t < 40; t++) {
-    const i = p[rand(p.length)], r = rec(WORDS[i][0]);
-    if (recent.includes(i) && p.length > 40) continue;
-    if (r[1] > r[0] || r[2] === 0 && r[1] > 0) return i;          // shaky words first
-    if (mastered(WORDS[i][0]) && Math.random() < 0.7) continue;     // known words less often
-    return i;
+  const inPool = new Set(p);
+  const d = S.due.findIndex(([w, at]) => at <= S.qn && inPool.has(INDEX.get(w)));
+  if (d >= 0) return INDEX.get(S.due.splice(d, 1)[0][0]);
+  const seen = new Set(S.qSeen);
+  let cand = p.filter(i => !seen.has(WORDS[i][0]));
+  if (!cand.length) {                       // this set is used up: start a new round for it
+    const words = new Set(p.map(i => WORDS[i][0]));
+    S.qSeen = S.qSeen.filter(w => !words.has(w)); cand = p;
   }
-  return p[rand(p.length)];
+  const i = cand[rand(cand.length)];
+  S.qSeen.push(WORDS[i][0]);
+  return i;
 }
 // wrong choices for sense k of word i: other words, each with one of its senses (same part of speech when possible)
 function distractors(i, k, count) {
@@ -401,7 +410,7 @@ function ask() {
   let p = pool();
   if (p.length < 2) { S.missedOnly = false; S.letter = ""; S.level = ""; save(); p = pool(); renderOpts(); }
   const i = pickWord(p);
-  recent.push(i); if (recent.length > 40) recent.shift();
+  S.qn++; save();
   const r = WORDS[i];
   let type = S.type === "mixed" ? ["sense", "word", "blank"][rand(3)] : S.type;
   // ask about one of the word's senses, picked at random, so every meaning gets practised
@@ -472,6 +481,7 @@ function answer(k) {
   const w = rec(r[0]).slice(), d = dayKey(), dd = S.days[d] || [0, 0];
   if (ok) { S.right++; w[0]++; dd[0]++; } else { S.wrong++; w[1]++; dd[1]++; }
   w[2] = ok ? 1 : 0; w[3] = d; S.words[r[0]] = w; S.days[d] = dd;
+  if (!ok && !S.due.some(x => x[0] === r[0])) S.due.push([r[0], S.qn + 6]);
   save(); renderLife();
   const def = $("def");
   def.innerHTML = entryHTML(cur.i) +
@@ -530,8 +540,17 @@ function deckPool() {
   return p;
 }
 function newDeck() {
-  const p = shuffle(deckPool());
-  fc.deck = p.slice(0, S.fcSize); fc.pos = 0; fc.flipped = false; fc.knew = 0; fc.missed = 0; fc.seen = new Set();
+  // like Practice: every card in the chosen deck comes up once before any repeats, across decks and restarts
+  const p = shuffle(deckPool()), seen = new Set(S.cSeen);
+  let deck = p.filter(i => !seen.has(WORDS[i][0])).slice(0, S.fcSize);
+  if (deck.length < Math.min(S.fcSize, p.length)) {   // round used up: start a new one and top up the deck
+    const words = new Set(p.map(i => WORDS[i][0])), inDeck = new Set(deck);
+    S.cSeen = S.cSeen.filter(w => !words.has(w));
+    deck = deck.concat(p.filter(i => !inDeck.has(i)).slice(0, S.fcSize - deck.length));
+  }
+  for (const i of deck) S.cSeen.push(WORDS[i][0]);
+  save();
+  fc.deck = deck; fc.pos = 0; fc.flipped = false; fc.knew = 0; fc.missed = 0; fc.seen = new Set();
   renderFcOpts(); drawCard();
 }
 function drawCard() {
