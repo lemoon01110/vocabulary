@@ -374,11 +374,12 @@ function pool() {
 let cur = null, done = false, timer = null, qNo = 0;
 // Every word in the chosen set comes up once, in random order, before any word repeats (a "round").
 // The round is saved, so switching tabs or closing the app does not start it over.
-// A missed word comes back once, about 6 questions later.
+// A missed word comes back once, 5 to 20 questions later, mixed in at random.
 function pickWord(p) {
   const inPool = new Set(p);
-  const d = S.due.findIndex(([w, at]) => at <= S.qn && inPool.has(INDEX.get(w)));
-  if (d >= 0) return INDEX.get(S.due.splice(d, 1)[0][0]);
+  // missed words that are due: take a random one, so they never replay in the order they were missed
+  const ready = S.due.map((x, j) => j).filter(j => S.due[j][1] <= S.qn && inPool.has(INDEX.get(S.due[j][0])));
+  if (ready.length && Math.random() < 0.5) return INDEX.get(S.due.splice(ready[rand(ready.length)], 1)[0][0]);
   const seen = new Set(S.qSeen);
   let cand = p.filter(i => !seen.has(WORDS[i][0]));
   if (!cand.length) {                       // this set is used up: start a new round for it
@@ -481,7 +482,7 @@ function answer(k) {
   const w = rec(r[0]).slice(), d = dayKey(), dd = S.days[d] || [0, 0];
   if (ok) { S.right++; w[0]++; dd[0]++; } else { S.wrong++; w[1]++; dd[1]++; }
   w[2] = ok ? 1 : 0; w[3] = d; S.words[r[0]] = w; S.days[d] = dd;
-  if (!ok && !S.due.some(x => x[0] === r[0])) S.due.push([r[0], S.qn + 6]);
+  if (!ok && !S.due.some(x => x[0] === r[0])) S.due.push([r[0], S.qn + 5 + rand(16)]);   // back in 5 to 20 questions, at a random point
   save(); renderLife();
   const def = $("def");
   def.innerHTML = entryHTML(cur.i) +
@@ -594,7 +595,7 @@ function grade(ok) {
   c[2] = dayKey(); S.cards[w] = c; save();
   const first = !fc.seen.has(i); fc.seen.add(i);
   if (ok) { if (first) fc.knew++; }
-  else { fc.missed++; fc.deck.splice(Math.min(fc.deck.length, fc.pos + 5), 0, i); }   // comes back in about 5 cards
+  else { fc.missed++; const lo = fc.pos + 3, hi = fc.deck.length + 1; fc.deck.splice(lo >= hi ? fc.deck.length : lo + rand(hi - lo), 0, i); }   // comes back later in the deck, at a random spot
   fc.pos++; fc.flipped = false; drawCard();
 }
 function renderFcOpts() {
