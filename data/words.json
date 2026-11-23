@@ -3219,8 +3219,8 @@
  },
  {
   "word": "alliteration",
-  "say": "uh-LIT-er-ay-shuhn",
-  "ipa": "/əˈlɪtɚˌeɪʃən/",
+  "say": "uh-lit-uh-RAY-shun",
+  "ipa": "/əˌlɪtəˈreɪʃən/",
   "origin": "From Latin \"alliteratio\", built from \"ad\", meaning \"toward\", and \"littera\", meaning \"letter\", for repeated beginnings of nearby words.",
   "rare": false,
   "senses": [
@@ -3584,8 +3584,8 @@
  },
  {
   "word": "amatory",
-  "say": "AH-muh-tuh-ree",
-  "ipa": "/ˈɑmətəri/",
+  "say": "AM-uh-tor-ee",
+  "ipa": "/ˈæməˌtɔri/",
   "origin": "From Latin \"amatorius\", concerning love or a lover, based on \"amare\", meaning to love.",
   "rare": false,
   "senses": [
@@ -3916,8 +3916,8 @@
  },
  {
   "word": "amenity",
-  "say": "uh-EN-uh-tee",
-  "ipa": "/əˈɛnəti/",
+  "say": "uh-MEN-uh-tee",
+  "ipa": "/əˈmɛnəti/",
   "origin": "From Latin \"amoenitas\", pleasantness, through French. Its Latin base \"amoenus\" meant pleasant, though its older origin is unknown.",
   "rare": false,
   "senses": [
@@ -4861,12 +4861,12 @@
    },
    {
     "pos": "noun",
-    "def": "building or section added to a larger building",
+    "def": "building or section added to a larger building (said AN-eks)",
     "ex": "The library moved its rare maps into an annex beside the main reading room."
    },
    {
     "pos": "noun",
-    "def": "supplementary section attached to a document",
+    "def": "supplementary section attached to a document (said AN-eks)",
     "ex": "The report placed the detailed survey questions in an annex at the end."
    }
   ],
@@ -5637,7 +5637,7 @@
    {
     "pos": "noun",
     "def": "contrast of opposing ideas placed side by side in parallel phrases",
-    "ex": "The speech's famous antithesis, ask not what your country can do for you, still appears in textbooks."
+    "ex": "Kennedy's line \"ask not what your country can do for you, ask what you can do for your country\" is a famous antithesis."
    },
    {
     "pos": "noun",
@@ -6711,7 +6711,7 @@
    {
     "pos": "adverb",
     "def": "by the way, used to introduce a remark loosely connected to the topic",
-    "ex": "Apropos of nothing, my uncle suddenly announced at dinner that he had once met a famous astronaut."
+    "ex": "We were planning the field trip when Dana said, apropos, that the museum is closed on Mondays."
    }
   ],
   "syn": "relevant, pertinent, apt, appropriate, germane",
@@ -8201,6 +8201,11 @@
     "pos": "adjective",
     "def": "sharply critical or severe",
     "ex": "The critic's astringent review called the novel's ending lazy and its dialogue painfully stiff."
+   },
+   {
+    "pos": "adjective",
+    "def": "causing a dry, puckering feeling in the mouth, as strong tea or unripe fruit does",
+    "ex": "The unripe persimmon was so astringent that it left her mouth feeling dry and puckered."
    },
    {
     "pos": "adjective",
@@ -10402,7 +10407,7 @@
   "word": "batten",
   "say": "BAT-un",
   "ipa": "/ˈbætən/",
-  "origin": "The verb \"batten on\" comes from Old Norse \"batna\", to improve or grow better. The wooden strip is probably a form of \"baton\", stick.",
+  "origin": "The verb \"batten on\" comes from Old Norse \"batna\", to improve or grow better. The wooden strip comes from Old French \"batent\", a beating, from \"batre\", to beat, and the verb \"batten down\" comes from that strip.",
   "rare": false,
   "senses": [
    {
@@ -13022,7 +13027,7 @@
    {
     "pos": "noun",
     "def": "someone seen as automatically defending authorities or the powerful",
-    "ex": "In the online debate about the protest, each side dismissed critics of the police as radicals or as bootlickers."
+    "ex": "In the online debate about the protest, critics of the police were called radicals, and their defenders were called bootlickers."
    }
   ],
   "syn": "toady, sycophant, flatterer, lackey, yes-man",
@@ -18419,6 +18424,11 @@
     "ex": "Historians treat 1848 as a political climacteric, the year revolutions forced nearly every European monarch to rethink power."
    },
    {
+    "pos": "noun",
+    "def": "period of physical change in middle age, especially the menopause in women",
+    "ex": "Her doctor explained which symptoms are normal during the climacteric."
+   },
+   {
     "pos": "adjective",
     "def": "critical or decisive, marking a turning point",
     "ex": "The climacteric vote in the final week decided whether the factory would stay in town or move abroad."
@@ -21665,7 +21675,7 @@
    },
    {
     "pos": "verb",
-    "def": "enlist someone by law into military service, or press someone into a task",
+    "def": "enlist someone by law into military service, or press someone into a task (said kun-SKRIPT)",
     "ex": "When the border war broke out, the government conscripted every able-bodied man between eighteen and thirty."
    }
   ],
@@ -21833,7 +21843,7 @@
    },
    {
     "pos": "noun",
-    "def": "panel or cabinet holding the controls of a machine, or a video game system",
+    "def": "panel or cabinet holding the controls of a machine, or a video game system (said KAHN-sohl)",
     "ex": "The sound engineer adjusted dozens of sliders on the mixing console during the live concert."
    }
   ],
@@ -21922,7 +21932,7 @@
    },
    {
     "pos": "verb",
-    "def": "keep company with someone, often someone others disapprove of",
+    "def": "keep company with someone, often someone others disapprove of (said kun-SORT)",
     "ex": "The senator was criticized for consorting with lobbyists at expensive weekend golf retreats."
    }
   ],
@@ -22090,7 +22100,7 @@
    },
    {
     "pos": "verb",
-    "def": "complete or finalize something, such as a deal or marriage",
+    "def": "complete or finalize something, such as a deal or marriage (said KAHN-suh-mayt)",
     "ex": "The two companies consummated the merger after a year of negotiations and government review."
    }
   ],
@@ -22833,12 +22843,12 @@
    },
    {
     "pos": "noun",
-    "def": "the opposite or reverse of a statement or situation",
+    "def": "the opposite or reverse of a statement or situation (said KAHN-vurs)",
     "ex": "Most fast talkers are nervous, but the converse is not true, since plenty of nervous people speak slowly."
    },
    {
     "pos": "adjective",
-    "def": "opposite or reversed in order or relation",
+    "def": "opposite or reversed in order or relation (said KAHN-vurs)",
     "ex": "The two economists drew converse conclusions from exactly the same unemployment figures."
    }
   ],
@@ -24601,7 +24611,7 @@
   "word": "culmination",
   "say": "kul-muh-NAY-shun",
   "ipa": "/ˌkʌlməˈneɪʃən/",
-  "origin": "From \"culminate\", from Late Latin \"culminare\", to reach the top, from Latin \"culmen\", summit or peak.",
+  "origin": "From \"culminate\", from Medieval Latin \"culminare\", to crown, from Latin \"culmen\", summit or peak.",
   "rare": false,
   "senses": [
    {
@@ -27103,6 +27113,11 @@
   "senses": [
    {
     "pos": "adjective",
+    "def": "serving as clear evidence or proof of something, often used with \"of\"",
+    "ex": "Her quick apology was demonstrative of how much the friendship meant to her."
+   },
+   {
+    "pos": "adjective",
     "def": "openly showing feelings, especially affection",
     "ex": "Her family was warm and demonstrative, greeting even distant cousins with long hugs and kisses on both cheeks."
    },
@@ -27783,7 +27798,7 @@
    {
     "pos": "verb",
     "def": "come or develop from a particular source",
-    "ex": "The word \"salary\" may derive from the Latin for salt, though historians still debate the connection."
+    "ex": "The word \"salary\" derives from the Latin for salt, though historians still debate how a word for salt came to mean wages."
    },
    {
     "pos": "verb",
@@ -29079,12 +29094,12 @@
    },
    {
     "pos": "adjective",
-    "def": "spread out over a large area, not concentrated",
+    "def": "spread out over a large area, not concentrated (said dih-FYOOS)",
     "ex": "The paper lantern gave a soft, diffuse light that filled the room without any harsh shadows."
    },
    {
     "pos": "adjective",
-    "def": "using too many words and lacking clear focus",
+    "def": "using too many words and lacking clear focus (said dih-FYOOS)",
     "ex": "His diffuse essay wandered through five topics without ever stating a clear argument."
    }
   ],
@@ -32807,7 +32822,7 @@
   "word": "dupe",
   "say": "DOOP",
   "ipa": "/ˈdup/",
-  "origin": "From French \"dupe\", traced to \"huppe\", the hoopoe, a bird thought to look foolish and easy to catch.",
+  "origin": "From French \"dupe\", traced to \"huppe\", the hoopoe, a bird thought to look foolish and easy to catch. The newer sense of a cheap copy is a separate word, short for \"duplicate\".",
   "rare": false,
   "senses": [
    {
@@ -32819,6 +32834,11 @@
     "pos": "noun",
     "def": "person who is easily deceived or used by others",
     "ex": "He realized too late that he had been a dupe, carrying packages for a smuggling ring."
+   },
+   {
+    "pos": "noun",
+    "def": "cheaper copy or imitation of a popular product",
+    "ex": "She bought a dupe of the designer handbag for a fraction of the price."
    }
   ],
   "syn": "deceive, trick, fool, hoodwink, con",
@@ -34280,7 +34300,7 @@
    },
    {
     "pos": "verb",
-    "def": "improve something morally, intellectually, or culturally",
+    "def": "improve the quality of something, or raise it morally, intellectually, or culturally",
     "ex": "The chef's bold spices elevated a simple bowl of lentils into something memorable."
    }
   ],
@@ -34723,7 +34743,7 @@
   "word": "embroil",
   "say": "em-BROYL",
   "ipa": "/ɛmˈbrɔɪl/",
-  "origin": "From \"em-\", into, plus \"broil\", to burn or scorch. Picture someone being pulled into the heat of a quarrel.",
+  "origin": "From French \"embrouiller\", to entangle, from \"em-\", in, plus \"brouiller\", to mix up or confuse. To embroil someone is to tangle them up in a conflict.",
   "rare": false,
   "senses": [
    {
@@ -34739,7 +34759,7 @@
   "word": "embroiled",
   "say": "em-BROYLD",
   "ipa": "/ɛmˈbrɔɪld/",
-  "origin": "Past participle of \"embroil\", from \"em-\", into, plus \"broil\", to burn, so being drawn into the heat of a conflict.",
+  "origin": "Past participle of \"embroil\", from French \"embrouiller\", to entangle, from \"em-\", in, plus \"brouiller\", to mix up, so being tangled up in a conflict.",
   "rare": false,
   "senses": [
    {
@@ -38212,7 +38232,7 @@
    },
    {
     "pos": "noun",
-    "def": "tax charged on certain goods made or sold within a country",
+    "def": "tax charged on certain goods made or sold within a country (said EK-syz)",
     "ex": "The state raised the excise on cigarettes to discourage smoking among teenagers."
    }
   ],
@@ -41110,12 +41130,12 @@
    },
    {
     "pos": "verb",
-    "def": "undergo or cause a chemical breakdown by yeast or bacteria, as in making wine or bread",
+    "def": "undergo or cause a chemical breakdown by yeast or bacteria, as in making wine or bread (said fer-MENT)",
     "ex": "The cabbage ferments in salty brine for several weeks before it becomes sauerkraut."
    },
    {
     "pos": "verb",
-    "def": "slowly build up, as unrest or ideas do, before breaking out",
+    "def": "slowly build up, as unrest or ideas do, before breaking out (said fer-MENT)",
     "ex": "Resentment over unpaid wages fermented among the miners for years before the strike finally began."
    }
   ],
@@ -43459,6 +43479,11 @@
   "senses": [
    {
     "pos": "verb",
+    "def": "shape metal by heating it and hammering it",
+    "ex": "The blacksmith forged a new iron hinge for the barn door."
+   },
+   {
+    "pos": "verb",
     "def": "create or establish something, such as a bond or agreement, through steady effort",
     "ex": "The two coaches forged a lasting friendship during the years they spent rebuilding the league."
    },
@@ -44284,7 +44309,7 @@
   "word": "frisson",
   "say": "free-SOHN",
   "ipa": "/friˈsoʊn/",
-  "origin": "From French \"frisson\", a shiver or thrill, from Latin \"frigere\", to be cold.",
+  "origin": "From French \"frisson\", a shiver or thrill, from Late Latin \"frictio\", a rubbing, a word later linked in sense with Latin \"frigere\", to be cold.",
   "rare": true,
   "senses": [
    {
@@ -49882,6 +49907,11 @@
    },
    {
     "pos": "noun",
+    "def": "any of the picture symbols used in ancient Egyptian and similar writing systems, usually plural",
+    "ex": "Visitors studied the hieroglyphics carved into the temple walls at Luxor."
+   },
+   {
+    "pos": "noun",
     "def": "writing or symbols that are difficult to decipher, usually plural",
     "ex": "The engineer's whiteboard was covered in hieroglyphics that only she could explain to the rest of the team."
    }
@@ -50067,7 +50097,7 @@
   "word": "hoarse",
   "say": "HORS",
   "ipa": "/hɔrs/",
-  "origin": "From Old English \"has\", hoarse, a Germanic word related to Swedish \"hes\"; the \"r\" was added later, in Middle English.",
+  "origin": "From Old English \"hās\", hoarse, with an older Germanic form \"*haisraz\" that already had the \"r\"; related to Dutch \"hees\" and Swedish \"hes\".",
   "rare": false,
   "senses": [
    {
@@ -50834,7 +50864,7 @@
   "word": "humdinger",
   "say": "HUM-ding-er",
   "ipa": "/ˈhʌmˌdɪŋər/",
-  "origin": "American slang first recorded in 1883, perhaps a blend of \"hummer\" and \"dinger\", both slang for something remarkable or outstanding.",
+  "origin": "American slang first recorded in 1883, perhaps a blend of \"hummer\", something that moves fast, and \"dinger\", something outstanding.",
   "rare": true,
   "senses": [
    {
@@ -57442,12 +57472,12 @@
   "senses": [
    {
     "pos": "verb",
-    "def": "officially forbid or prohibit something",
+    "def": "officially forbid or prohibit something (said in-ter-DIKT)",
     "ex": "The new law interdicts the sale of fireworks within city limits during the dry summer months."
    },
    {
     "pos": "verb",
-    "def": "intercept and stop the movement of something, such as smuggled goods or enemy supplies",
+    "def": "intercept and stop the movement of something, such as smuggled goods or enemy supplies (said in-ter-DIKT)",
     "ex": "Coast guard patrols interdicted three boats carrying illegal drugs off the coast of Florida last week."
    },
    {
@@ -58458,8 +58488,8 @@
    },
    {
     "pos": "verb",
-    "def": "bring a feeling, image, or memory to mind",
-    "ex": "The smell of pine needles invoked memories of childhood winters at his grandparents' cabin."
+    "def": "mention or call to mind a person, event, or idea, especially to support a point",
+    "ex": "In every speech the candidate invoked the memory of her immigrant grandparents to argue for better schools."
    }
   ],
   "syn": "cite, appeal to, call upon, refer to, resort to",
@@ -59996,6 +60026,11 @@
   "senses": [
    {
     "pos": "adjective",
+    "def": "having a sharp edge or point, or of wind or cold, biting and piercing",
+    "ex": "The chef ran the knife along the whetstone until its edge was keen enough to slice a tomato paper-thin."
+   },
+   {
+    "pos": "adjective",
     "def": "eager and enthusiastic to do something",
     "ex": "Maya was keen to join the robotics club and showed up to the first meeting with her own toolbox."
    },
@@ -61336,7 +61371,7 @@
   "word": "laudation",
   "say": "law-DAY-shun",
   "ipa": "/lɔˈdeɪʃən/",
-  "origin": "From Latin \"laudatio\", praise, from \"laudare\", to praise, the root of \"laud\" and \"applaud\".",
+  "origin": "From Latin \"laudatio\", praise, from \"laudare\", to praise, the root of \"laud\" and \"laudable\".",
   "rare": false,
   "senses": [
    {
@@ -61352,7 +61387,7 @@
   "word": "laudatory",
   "say": "LAW-duh-tor-ee",
   "ipa": "/ˈlɔdəˌtɔri/",
-  "origin": "From Latin \"laudatorius\", from \"laudare\", to praise, the same root as \"laud\" and \"applaud\".",
+  "origin": "From Latin \"laudatorius\", from \"laudare\", to praise, the same root as \"laud\" and \"laudable\".",
   "rare": false,
   "senses": [
    {
@@ -64209,7 +64244,7 @@
    {
     "pos": "noun",
     "def": "mistaken use of a word that sounds like the right one, often with a comic result",
-    "ex": "Saying the crime was committed by a \"vicious circle\" of thieves instead of a \"vicious ring\" is a mild malapropism, but \"for all intensive purposes\" is a famous one."
+    "ex": "Mrs. Malaprop's line \"as headstrong as an allegory on the banks of the Nile,\" with \"allegory\" in place of \"alligator,\" is the original malapropism."
    }
   ],
   "syn": "solecism, misusage, verbal blunder, gaffe",
@@ -65605,7 +65640,7 @@
   "word": "melodramatic",
   "say": "mel-uh-druh-MAT-ik",
   "ipa": "/ˌmɛlədrəˈmætɪk/",
-  "origin": "From \"melodrama\", from French \"melodrame\", from Greek \"melos\", song, and \"drame\", drama: stage plays with music to heighten every emotion.",
+  "origin": "From \"melodrama\", from French \"mélodrame\", from Greek \"melos\", song, plus French \"drame\", drama: stage plays with music to heighten every emotion.",
   "rare": false,
   "senses": [
    {
@@ -66488,7 +66523,7 @@
   "word": "mince",
   "say": "MINS",
   "ipa": "/mɪns/",
-  "origin": "From Old French \"mincier\", to cut into small pieces, ultimately from Latin \"minutus\", small: to chop finely, or to cut words down to softer size.",
+  "origin": "From Middle English \"mincen\", partly from Old English \"minsian\", to make smaller, and partly from Old French \"mincier\", to cut into small pieces, from \"mince\", slender, from a Frankish word meaning small.",
   "rare": false,
   "senses": [
    {
@@ -68147,7 +68182,7 @@
   "word": "mudlark",
   "say": "MUHD-lark",
   "ipa": "/ˈmʌdlɑrk/",
-  "origin": "Formed from English \"mud\" and \"lark\", a playful adventure, for searching muddy riverbanks.",
+  "origin": "From \"mud\" plus \"lark\", the bird, as if the scavenger were a bird picking about on muddy riverbanks.",
   "rare": true,
   "senses": [
    {
@@ -73611,11 +73646,6 @@
     "pos": "noun",
     "def": "unhealthy paleness of the face, often from illness, fear, or shock",
     "ex": "The nurse noticed the patient's sudden pallor and immediately checked his blood pressure."
-   },
-   {
-    "pos": "noun",
-    "def": "gloomy or lifeless atmosphere",
-    "ex": "News of the factory closing cast a pallor over the town's usually cheerful harvest festival."
    }
   ],
   "syn": "paleness, pallidness, wanness, ashenness, pastiness",
@@ -76200,7 +76230,7 @@
   "word": "periphery",
   "say": "puh-RIF-uh-ree",
   "ipa": "/pəˈrɪfəri/",
-  "origin": "From Greek \"peripheria\", circumference, from \"peri\", around, + \"pherein\", to carry: the line carried around the edge.",
+  "origin": "From Greek \"periphereia\", circumference, from \"peri\", around, plus \"pherein\", to carry: the line carried around the edge.",
   "rare": false,
   "senses": [
    {
@@ -81843,7 +81873,7 @@
   "word": "propaganda",
   "say": "prah-puh-GAN-duh",
   "ipa": "/ˌprɑpəˈɡændə/",
-  "origin": "From New Latin prōpāganda, meaning \"things to be spread,\" from Latin prōpāgō, meaning \"propagate.\" It first named a church mission committee.",
+  "origin": "From New Latin \"Congregatio de Propaganda Fide\", congregation for propagating the faith, a church committee set up in 1622 to oversee foreign missions. \"Propaganda\" is a form of Latin \"propagare\", to spread or propagate.",
   "rare": false,
   "senses": [
    {
@@ -82419,6 +82449,11 @@
     "pos": "noun",
     "def": "protective guidance believed to come from God or a higher power",
     "ex": "She regarded the rescue boat's arrival at dawn as an act of providence."
+   },
+   {
+    "pos": "noun",
+    "def": "careful preparation for the future, especially thrifty management of resources",
+    "ex": "Her providence in saving a little each month carried the family through the layoff without debt."
    }
   ],
   "syn": "divine guidance, divine care, heavenly protection",
@@ -85719,12 +85754,12 @@
    },
    {
     "pos": "noun",
-    "def": "second count of something, especially votes in a close election",
+    "def": "second count of something, especially votes in a close election (said REE-kownt)",
     "ex": "With only forty votes separating the candidates, state law required a recount."
    },
    {
     "pos": "verb",
-    "def": "count something again, such as money or votes",
+    "def": "count something again, such as money or votes (said ree-KOWNT)",
     "ex": "The cashier recounted the bills twice before admitting the drawer was short."
    }
   ],
@@ -93642,6 +93677,11 @@
     "ex": "The candidate called the rumor a cheap slur invented by rivals to damage her campaign."
    },
    {
+    "pos": "noun",
+    "def": "offensive, insulting word used against a group of people, such as an ethnic or racial group",
+    "ex": "The player was suspended for shouting a slur at an opponent during the game."
+   },
+   {
     "pos": "verb",
     "def": "speak words unclearly so that the sounds run together",
     "ex": "Exhausted after a double shift, the nurse began to slur her words while giving the report."
@@ -94533,9 +94573,19 @@
   "word": "sound",
   "say": "SOWND",
   "ipa": "/ˈsaʊnd/",
-  "origin": "The \"valid, undamaged\" senses come from Old English \"sund\", healthy or whole. The \"measure depth\" verb is a separate word, from Old French \"sonder\".",
+  "origin": "The noise senses come from Old French \"son\", from Latin \"sonus\", sound. The \"valid, undamaged\" senses come from Old English \"sund\", healthy or whole. The \"measure depth\" verb is a separate word, from Old French \"sonder\".",
   "rare": false,
   "senses": [
+   {
+    "pos": "noun",
+    "def": "vibrations traveling through air or water that can be heard, or a particular noise",
+    "ex": "The sound of thunder rolled across the valley."
+   },
+   {
+    "pos": "verb",
+    "def": "seem a certain way when heard or described",
+    "ex": "Her plan sounds reasonable, but I want to see the numbers."
+   },
    {
     "pos": "adjective",
     "def": "based on valid reasoning, good judgment, or reliable evidence",
@@ -99303,7 +99353,7 @@
   "word": "temporal",
   "say": "TEM-per-ul",
   "ipa": "/ˈtɛmpərəl/",
-  "origin": "From Latin \"temporalis\", of time, from \"tempus\", time; to medieval writers, things bound by time were worldly, as opposed to eternal.",
+  "origin": "From Latin \"temporalis\", of time, from \"tempus\", time; to medieval writers, things bound by time were worldly, as opposed to eternal. The sense relating to the temples of the head is a separate word, from Late Latin \"temporalis\", from \"tempora\", the temples.",
   "rare": false,
   "senses": [
    {
@@ -107136,6 +107186,11 @@
     "pos": "verb",
     "def": "of the moon, show a smaller lit portion each night after the full moon",
     "ex": "As the moon waned through the week, the stars over the desert grew brighter and brighter."
+   },
+   {
+    "pos": "noun",
+    "def": "gradual decline in size, strength, power, or importance, usually in the phrase \"on the wane\"",
+    "ex": "By the end of the decade, support for the old policy was clearly on the wane."
    }
   ],
   "syn": "decline, diminish, fade, dwindle, ebb",
@@ -108318,7 +108373,7 @@
   "word": "wrack",
   "say": "RAK",
   "ipa": "/ræk/",
-  "origin": "From Middle Dutch \"wrak\", wreckage, related to \"wreck\" and \"wreak\". As a verb it is often used as a variant spelling of \"rack\", to torment.",
+  "origin": "The sense of ruin, as in \"wrack and ruin\", comes from Old English \"wræc\", misery or punishment, related to \"wreak\". The sense of seaweed and debris washed ashore comes from Middle Dutch \"wrak\", wreckage, related to \"wreck\". As a verb it is often a variant spelling of \"rack\", to torment.",
   "rare": true,
   "senses": [
    {
