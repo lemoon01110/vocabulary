@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the app page: dist/web/index.html (all 2,880 words embedded) plus the bundled font.
+"""Build the app page: dist/web/index.html (the whole word list embedded) plus the bundled font.
 
 Used by every platform build (Linux, Android). No network access needed.
 """
@@ -8,9 +8,16 @@ import json, os, shutil
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "dist", "web")
 
+def row(e):
+    """data/words.json entry -> the compact array the page uses (see the comment at WORDS in template.html)."""
+    senses = [[s["pos"], s["def"], s["ex"]] for s in e["senses"]]
+    pos = " / ".join(dict.fromkeys(s[0] for s in senses))
+    return [e["word"], pos, senses[0][1], e.get("syn", ""), e.get("ant", ""), senses[0][2],
+            e.get("say", ""), e.get("ipa", ""), e.get("origin", ""), 1 if e.get("rare") else 0, senses]
+
 def build(out=OUT):
     tpl = open(os.path.join(ROOT, "web", "template.html"), encoding="utf-8").read()
-    words = json.load(open(os.path.join(ROOT, "data", "words.json"), encoding="utf-8"))
+    words = [row(e) for e in json.load(open(os.path.join(ROOT, "data", "words.json"), encoding="utf-8"))]
     data = json.dumps(words, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     split = tpl.index('<div class="page">')
     head, body = tpl[:split], tpl[split:].replace("__DATA__", data, 1)

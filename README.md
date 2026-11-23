@@ -1,14 +1,15 @@
 # Vocabulary
 
-A study app for 2,880 GRE vocabulary words, for Linux and Android. It works without an internet connection, and progress is saved on the device.
+A study app for 5,646 English vocabulary words, for Linux and Android: 5,061 words from GRE study lists and 585 rarer literary words. It works without an internet connection, and progress is saved on the device.
 
 ## Features
 
 - **Practice**: multiple-choice questions. A question shows a word and asks for its meaning, shows a meaning and asks for the word, or asks which word completes a sentence. Words answered incorrectly come up more often.
 - **Cards**: flashcards. Each card is marked as known or not known, and cards not known are shown again later in the same deck.
-- **Dictionary**: all entries in alphabetical order, searchable by word or by definition. Each entry has a part of speech, a definition, an example sentence, synonyms and antonyms.
+- **Dictionary**: all entries in alphabetical order, searchable by word or by definition. Each entry has a pronunciation (a simple respelling and IPA), one or more numbered senses with a part of speech, a definition and an example sentence for each, synonyms, antonyms and a short note on the word's origin.
 - **Notebook**: words answered incorrectly that have not yet been learned, with an option to practice only those.
 - **Record**: overall accuracy, number of answers, daily streak, and results for the last 14 days.
+- **Lists**: practice and cards can use all words, only the GRE words, or only the rare words.
 - **Backup**: the record can be copied as text and restored on another device.
 
 Keyboard shortcuts: `1` to `6` to answer, `Enter` for the next word, `Space` to turn a card, and the arrow keys to mark it.
@@ -49,7 +50,7 @@ The Android build uses the SDK tools directly rather than Gradle. It requires JD
 ## Project layout
 
 ```
-data/words.json     word list: [word, part of speech, definition, synonyms, antonyms, example]
+data/words.json     word list: one object per word (word, say, ipa, origin, rare, senses, syn, ant)
 web/template.html   the app (HTML, CSS and JavaScript)
 web/build.py        embeds the word list and writes dist/web/
 web/fonts/          Newsreader typeface
@@ -61,4 +62,4 @@ The word list can be changed by editing `data/words.json` and rebuilding.
 
 ## License
 
-The code is released under the MIT License (see `LICENSE`). The Newsreader typeface by Production Type is released under the SIL Open Font License 1.1 (see `web/fonts/OFL.txt`). The word list is based on common GRE study lists. The definitions, synonyms, antonyms and example sentences were written for this project.
+The code is released under the MIT License (see `LICENSE`). The Newsreader typeface by Production Type is released under the SIL Open Font License 1.1 (see `web/fonts/OFL.txt`). The word list is based on common GRE study lists. The definitions, synonyms, antonyms, example sentences and origin notes were written for this project. Pronunciations and origins were checked against the CMU Pronouncing Dictionary and Wiktionary.
