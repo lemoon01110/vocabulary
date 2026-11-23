@@ -1,6 +1,6 @@
 # Maintainer: lemoon01110 <228291711+lemoon01110@users.noreply.github.com>
 pkgname=gre-vocabulary
-pkgver=1.1.2
+pkgver=1.1.3
 pkgrel=1
 pkgdesc="GRE vocabulary study app with practice questions, flashcards and a 2,880-word dictionary"
 arch=('any')
