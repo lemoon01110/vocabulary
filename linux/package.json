@@ -2,7 +2,7 @@
   "name": "vocabulary",
   "productName": "Vocabulary",
   "version": "1.1.6",
-  "description": "GRE vocabulary study app with practice questions, flashcards and a 2,880-word dictionary.",
+  "description": "GRE vocabulary study app with practice questions, flashcards and a 5,646-word dictionary.",
   "main": "main.js",
   "license": "MIT",
   "private": true
