@@ -14,7 +14,9 @@
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;
   padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:14px 60px;
   -webkit-font-smoothing:antialiased}
-.page{max-width:620px;margin:0 auto}
+.page{max-width:620px;margin:0 auto;min-height:calc(100vh - 74px);display:flex;flex-direction:column}
+/* practice and cards sit in the middle of the window, not against the top */
+#v-practice,#v-cards{margin-block:auto;padding-block:24px}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0;padding:0;text-align:left}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
@@ -24,6 +26,7 @@ a{color:inherit}
 
 /* running head */
 .head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+@media (min-width:521px){.head{flex-wrap:nowrap;gap:16px}.head .nav{flex-wrap:nowrap;gap:14px}.head .life{white-space:nowrap}}
 .head .mark{font-weight:700;font-size:1.05rem;letter-spacing:.02em}
 .head .mark i{color:var(--red);font-style:normal}
 .nav{display:flex;gap:16px;flex-wrap:wrap}
